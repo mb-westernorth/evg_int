@@ -468,7 +468,8 @@ tr.agrup-spacer td { height: 6px; background: var(--silver); padding: 0; border:
 </div>
 
 <script>
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzca5dIEMy3XqDnzGb-bxtkeJMUy77tsT6WwNcqCT5uqkzjURQ3lEsSdf4zJACeb5J0Hw/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-ZgwyACLnodcaPFFE_UEF3xwnYGekfVasNZ7Rd1INJ-3QElUeuyQbpKFL3ewlDRzBxg/exec";
+const SECRET_TOKEN    = "CAMBIA_ESTO_POR_UN_UUID_SECRETO"; // mismo valor que en Config.gs
 const MESES      = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 const MESES_FULL = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
@@ -917,7 +918,7 @@ async function guardar() {
   if (!sabadoSel || !iglesiaActual) return;
   const cantidad = Math.max(0, parseInt(document.getElementById("inputCantidad").value) || 0);
   setGuardando(true); ocultarToasts();
-  const payload = { action:"guardarInteresados", grupo:iglesiaActual.grupo, iglesia:iglesiaActual.iglesia, fecha:sabadoSel.key, mes:sabadoSel.mes, cantidad };
+  const payload = { token:SECRET_TOKEN, action:"guardarInteresados", grupo:iglesiaActual.grupo, iglesia:iglesiaActual.iglesia, fecha:sabadoSel.key, mes:sabadoSel.mes, cantidad };
   try {
     await fetch(APPS_SCRIPT_URL, { method:"POST", mode:"no-cors", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) });
     if (!iglesiaActual.sabados) iglesiaActual.sabados = {};
