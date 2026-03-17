@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro de Interesados al Bautismo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy:       #0d1b2a;
+  --blue:       #1565c0;
+  --blue-hover: #1976d2;
+  --blue-pale:  #e3edf8;
+  --silver:     #f4f6f9;
+  --white:      #ffffff;
+  --text:       #0d1b2a;
+  --text-mid:   #3d5166;
+  --text-muted: #7a8fa3;
+  --border:     #dce4ee;
+  --success:    #1b7a4a;
+  --success-bg: #e8f5ee;
+  --success-bd: #b2d8c4;
+  --danger:     #b91c1c;
+  --danger-bg:  #fef2f2;
+  --radius-sm:  4px;
+  --radius:     6px;
+  --radius-lg:  10px;
+  --shadow-sm:  0 1px 3px rgba(13,27,42,0.08);
+}
+body { font-family: 'Source Sans 3', sans-serif; background: var(--silver); min-height: 100vh; color: var(--text); font-size: 14px; }
+
+/* Topbar */
+.topbar { background: var(--navy); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
+.topbar-brand { display: flex; align-items: center; gap: 12px; }
+.topbar-logo { width: 32px; height: 32px; background: var(--blue); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; }
+.topbar-name { font-family: 'Playfair Display', serif; font-size: 15px; color: white; }
+.topbar-sub { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; text-transform: uppercase; }
+.topbar-year { font-size: 12px; color: rgba(255,255,255,0.45); }
+
+/* Layout */
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+.breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); margin-bottom: 1rem; flex-wrap: wrap; }
+.bc-link { color: var(--blue); cursor: pointer; } .bc-link:hover { text-decoration: underline; }
+.bc-active { color: var(--text-mid); font-weight: 500; }
+.page-header { margin-bottom: 1.75rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+.page-header h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 600; color: var(--navy); margin-bottom: 3px; }
+.page-header p { font-size: 13px; color: var(--text-muted); }
+
+/* Cards */
+.card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); margin-bottom: 1rem; overflow: hidden; }
+.card-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--silver); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.card-header-left { display: flex; align-items: center; gap: 10px; }
+.card-header-icon { width: 28px; height: 28px; background: var(--blue); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+.card-header-text h2 { font-size: 13px; font-weight: 600; color: var(--navy); }
+.card-header-text p { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.card-body { padding: 1.5rem; }
+
+/* Loading */
+.loading-state { display: flex; align-items: center; gap: 12px; padding: 2rem; color: var(--text-muted); font-size: 13px; }
+.spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Form */
+.field { margin-bottom: 1rem; }
+.field label { display: block; font-size: 11px; font-weight: 600; color: var(--text-mid); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 5px; }
+select, input[type="number"] { width: 100%; padding: 9px 12px; background: var(--white); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); font-family: 'Source Sans 3', sans-serif; font-size: 14px; outline: none; appearance: none; transition: border-color 0.15s, box-shadow 0.15s; cursor: pointer; }
+select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a8fa3' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 32px; }
+select:focus, input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(21,101,192,0.1); }
+
+/* Leyenda */
+.data-legend { display: flex; gap: 1.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; padding: 10px 14px; background: var(--silver); border: 1px solid var(--border); border-radius: var(--radius); }
+.legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-mid); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.l-consol { background: var(--blue); }
+.l-inter  { background: var(--success); }
+
+/* Totales */
+.group-totals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+.total-box { border-radius: var(--radius); padding: 1rem 1.25rem; border: 1px solid; }
+.total-box .tb-label { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 4px; }
+.total-box .tb-val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 600; line-height: 1; }
+.total-box .tb-note { font-size: 11px; margin-top: 4px; opacity: 0.75; }
+.tb-neutral { background: var(--silver); border-color: var(--border); }
+.tb-neutral .tb-label { color: var(--text-muted); } .tb-neutral .tb-val { color: var(--navy); }
+.tb-blue { background: var(--blue-pale); border-color: #c5d8f0; }
+.tb-blue .tb-label { color: var(--blue); } .tb-blue .tb-val { color: var(--blue); }
+.tb-green { background: var(--success-bg); border-color: var(--success-bd); }
+.tb-green .tb-label { color: var(--success); } .tb-green .tb-val { color: var(--success); }
+
+/* Tabla */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border); border-radius: var(--radius-lg); }
+table { width: 100%; min-width: 900px; border-collapse: collapse; font-size: 13px; }
+thead tr { background: var(--navy); }
+thead th { padding: 8px 10px; text-align: left; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.65); white-space: nowrap; }
+thead th.th-c { color: #93c5fd; }
+thead th.th-i { color: #6ee7b7; }
+
+/* Fila agrupación */
+tr.agrup-row td { background: #1e3a5f; padding: 9px 10px; border-top: 3px solid var(--navy); }
+tr.agrup-row .agrup-name { font-size: 13px; font-weight: 600; color: white; }
+tr.agrup-row .agrup-meta { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+.agrup-progress { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.agrup-track { flex: 1; height: 4px; background: rgba(255,255,255,0.15); border-radius: 99px; overflow: hidden; min-width: 80px; max-width: 160px; }
+.agrup-fill { height: 100%; background: #60a5fa; border-radius: 99px; }
+.agrup-pct { font-size: 11px; font-weight: 700; color: #93c5fd; white-space: nowrap; }
+.agrup-blanco-lbl { font-size: 10px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; text-align: center; }
+.agrup-blanco-val { font-size: 15px; font-weight: 700; color: #93c5fd; text-align: center; }
+
+/* Botón expandir agrupación */
+.btn-agrup-expand { background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 99px; cursor: pointer; color: rgba(255,255,255,0.6); font-size: 11px; padding: 3px 10px; transition: all 0.15s; font-family: 'Source Sans 3', sans-serif; font-weight: 500; white-space: nowrap; }
+.btn-agrup-expand:hover { background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.4); }
+.btn-agrup-expand.ae-expanded { background: rgba(110,231,183,0.15); color: #6ee7b7; border-color: rgba(110,231,183,0.4); }
+
+/* Fila expandible agrupación */
+tr.agrup-expand-row td { padding: 0; background: #1a2e44; border-bottom: 2px solid var(--navy); }
+tr.agrup-expand-row.hidden { display: none; }
+.agrup-expand-inner { padding: 12px 16px; }
+.agrup-expand-title { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #93c5fd; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.agrup-expand-title::before { content: ''; display: inline-block; width: 3px; height: 11px; background: #6ee7b7; border-radius: 2px; }
+.agrup-months-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; }
+.am-cell { text-align: center; padding: 8px 4px; border-radius: var(--radius-sm); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); }
+.am-cell.am-active { background: rgba(110,231,183,0.12); border-color: rgba(110,231,183,0.3); }
+.am-cell.am-current { background: rgba(147,197,253,0.15); border-color: rgba(147,197,253,0.4); }
+.am-name { font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+.am-cell.am-active .am-name { color: #6ee7b7; }
+.am-cell.am-current .am-name { color: #93c5fd; }
+.am-val { font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.25); margin-top: 2px; }
+.am-cell.am-active .am-val { color: #6ee7b7; }
+.am-cell.am-current .am-val { color: #93c5fd; }
+
+/* Filas iglesia */
+tr.iglesia-row { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+tr.iglesia-row:hover { background: #f0f5fb; }
+tr.iglesia-row.ir-sel { background: var(--blue-pale); }
+tr.iglesia-row td { padding: 9px 10px; vertical-align: middle; }
+.td-iglesia { font-weight: 500; color: var(--navy); }
+.td-resp { color: var(--text-mid); }
+.td-consol { color: var(--blue); font-weight: 600; text-align: center; vertical-align: middle; }
+.td-inter { color: var(--success); font-weight: 600; text-align: center; }
+.mini-bar-wrap { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+.mini-bar { width: 40px; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; flex-shrink: 0; }
+.mini-bar-fill { height: 100%; background: var(--blue); border-radius: 99px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; }
+.badge-blue  { background: var(--blue-pale); color: var(--blue); }
+.badge-green { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-bd); }
+.badge-warn  { background: #fffbeb; color: #92400e; border: 1px solid #fcd34d; }
+.btn-registrar { padding: 5px 13px; background: var(--blue); color: white; border: none; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Source Sans 3', sans-serif; transition: background 0.15s; white-space: nowrap; }
+.btn-registrar:hover { background: var(--blue-hover); }
+
+/* Botón expandir iglesia */
+.btn-expand { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 12px; padding: 4px 6px; transition: all 0.15s; font-family: 'Source Sans 3', sans-serif; font-weight: 500; white-space: nowrap; }
+.btn-expand:hover { color: var(--blue); }
+.btn-expand.expanded { color: var(--success); }
+
+/* Fila expandible iglesia */
+tr.expand-row td { padding: 0; background: #f8fafd; border-bottom: 2px solid var(--border); }
+tr.expand-row.hidden { display: none; }
+.expand-inner { padding: 14px 16px; }
+.expand-title { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.expand-title::before { content: ''; display: inline-block; width: 3px; height: 12px; background: var(--success); border-radius: 2px; }
+.months-summary { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; }
+.ms-cell { background: white; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px 6px; text-align: center; }
+.ms-cell.ms-active { border-color: var(--success-bd); background: var(--success-bg); }
+.ms-cell.ms-current { border-color: var(--blue); background: var(--blue-pale); }
+.ms-name { font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+.ms-cell.ms-active .ms-name { color: var(--success); }
+.ms-cell.ms-current .ms-name { color: var(--blue); }
+.ms-val { font-size: 16px; font-weight: 600; color: var(--navy); margin-top: 2px; }
+.ms-cell.ms-active .ms-val { color: var(--success); }
+
+/* Spacer */
+tr.agrup-spacer td { height: 6px; background: var(--silver); padding: 0; border: none; }
+
+/* Panel de registro */
+.reg-panel { background: var(--success-bg); border: 1px solid var(--success-bd); border-radius: var(--radius-lg); padding: 1.5rem; margin-top: 1rem; }
+.reg-panel-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--success-bd); }
+.reg-panel-icon { width: 32px; height: 32px; background: var(--success); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; flex-shrink: 0; }
+.reg-title { font-size: 14px; font-weight: 600; color: var(--success); }
+.reg-sub { font-size: 12px; color: #2d6a4a; margin-top: 1px; }
+.inter-tag { display: inline-flex; align-items: center; gap: 6px; background: white; border: 1px solid var(--success-bd); border-radius: 99px; padding: 4px 12px; font-size: 11px; font-weight: 600; color: var(--success); margin-bottom: 1.25rem; }
+.inter-dot { width: 7px; height: 7px; background: var(--success); border-radius: 50%; }
+
+/* Resumen mensual panel */
+.panel-monthly { background: white; border: 1px solid var(--success-bd); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+.panel-monthly-title { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--success); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.panel-monthly-title::before { content: ''; display: inline-block; width: 3px; height: 11px; background: var(--success); border-radius: 2px; }
+.pm-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+.pm-cell { text-align: center; padding: 6px 4px; border-radius: var(--radius-sm); }
+.pm-cell.pm-active { background: var(--success-bg); }
+.pm-cell.pm-current { background: var(--blue-pale); }
+.pm-name { font-size: 9px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); }
+.pm-cell.pm-active .pm-name { color: var(--success); }
+.pm-cell.pm-current .pm-name { color: var(--blue); }
+.pm-val { font-size: 15px; font-weight: 600; color: var(--navy); }
+.pm-cell.pm-active .pm-val { color: var(--success); }
+
+.sec-label { font-size: 11px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.sec-label.green { color: var(--success); }
+.section-divider { border: none; border-top: 1px solid var(--success-bd); margin: 1.25rem 0; }
+
+/* Month tabs */
+.month-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
+.month-tab { padding: 5px 13px; border: 1px solid var(--success-bd); border-radius: 99px; font-size: 12px; font-weight: 500; color: var(--success); background: var(--white); cursor: pointer; transition: all 0.15s; font-family: 'Source Sans 3', sans-serif; }
+.month-tab:hover { background: var(--success); color: white; border-color: var(--success); }
+.month-tab.mt-sel { background: var(--success); border-color: var(--success); color: white; }
+.month-tab.mt-data { font-weight: 700; }
+
+/* Sat grid */
+.sat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 8px; margin-bottom: 1.25rem; }
+.sat-card { border: 1px solid var(--success-bd); border-radius: var(--radius); padding: 10px 12px; cursor: pointer; transition: all 0.15s; background: var(--white); }
+.sat-card:hover { border-color: var(--success); box-shadow: var(--shadow-sm); }
+.sat-card.sc-sel { border-color: var(--success); background: var(--success-bg); box-shadow: 0 0 0 2px rgba(27,122,74,0.15); }
+.sat-card.sc-data { border-left: 3px solid var(--success); }
+.sc-day { font-size: 17px; font-weight: 600; color: var(--navy); line-height: 1; }
+.sc-month { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.sc-prev { font-size: 11px; color: var(--success); font-weight: 600; margin-top: 4px; }
+
+/* Num input */
+.num-field label { display: block; font-size: 11px; font-weight: 600; color: var(--success); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+.num-row { display: flex; gap: 8px; align-items: center; }
+.num-btn { width: 38px; height: 44px; border: 1px solid var(--success-bd); border-radius: var(--radius); background: var(--success-bg); color: var(--success); font-size: 20px; cursor: pointer; transition: all 0.1s; font-family: 'Source Sans 3', sans-serif; }
+.num-btn:hover { background: var(--success); color: white; }
+.num-btn5 { padding: 0 12px; height: 44px; border: 1px solid var(--success-bd); border-radius: var(--radius); background: var(--success-bg); color: var(--success); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.1s; font-family: 'Source Sans 3', sans-serif; }
+.num-btn5:hover { background: var(--success); color: white; }
+.num-row input[type="number"] { flex: 1; height: 44px; font-size: 1.5rem; font-family: 'Playfair Display', serif; font-weight: 600; text-align: center; border-color: var(--success-bd); }
+.num-row input[type="number"]:focus { border-color: var(--success); box-shadow: 0 0 0 3px rgba(27,122,74,0.12); }
+
+/* Buttons */
+.btn-row { display: flex; gap: 10px; margin-top: 1.25rem; }
+.btn { padding: 10px 20px; border-radius: var(--radius); border: none; font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 7px; }
+.btn-primary { background: var(--blue); color: white; }
+.btn-primary:hover { background: var(--blue-hover); }
+.btn-primary:disabled { background: var(--border); color: var(--text-muted); cursor: not-allowed; }
+.btn-outline { background: white; color: var(--navy); border: 1px solid var(--border); }
+.btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+.btn-success { background: var(--success); color: white; }
+.btn-success:hover { background: #166534; }
+.btn-success:disabled { background: var(--border); color: var(--text-muted); cursor: not-allowed; }
+.btn-lg { padding: 12px 28px; font-size: 14px; }
+.btn-spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+
+/* Toast */
+.toast { display: none; align-items: center; gap: 10px; padding: 12px 16px; border-radius: var(--radius); margin-top: 1rem; font-size: 13px; font-weight: 500; }
+.toast-ok  { background: var(--success-bg); border: 1px solid var(--success-bd); color: var(--success); }
+.toast-err { background: var(--danger-bg); border: 1px solid #fecaca; color: var(--danger); }
+
+.empty-msg { text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 13px; }
+#step2 { display: none; }
+
+/* Modal flotante */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(13,27,42,0.55);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 40px rgba(13,27,42,0.25);
+  width: 100%;
+  max-width: 620px;
+  max-height: 88vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalIn 0.18s ease;
+}
+@keyframes modalIn { from { opacity:0; transform: translateY(-12px) scale(0.98); } to { opacity:1; transform: none; } }
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--success-bd);
+  background: var(--success-bg);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.modal-header-left { display: flex; align-items: center; gap: 10px; }
+.modal-close {
+  width: 30px; height: 30px;
+  border: 1px solid var(--success-bd);
+  border-radius: 50%;
+  background: white;
+  color: var(--success);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.modal-close:hover { background: var(--success); color: white; border-color: var(--success); }
+.modal-body { padding: 1.5rem; }
+
+/* Tablet */
+@media (max-width: 860px) {
+  .months-summary { grid-template-columns: repeat(6, 1fr); }
+  .agrup-months-grid { grid-template-columns: repeat(6, 1fr); }
+  .pm-grid { grid-template-columns: repeat(4, 1fr); }
+}
+/* Móvil */
+@media (max-width: 600px) {
+  .container { padding: 1.25rem 1rem 3rem; }
+  .topbar { padding: 0 1rem; }
+  .topbar-sub { display: none; }
+  .group-totals { grid-template-columns: 1fr; }
+  .data-legend { flex-direction: column; gap: 8px; }
+  .card-header { flex-wrap: wrap; }
+  .reg-panel { padding: 1.25rem 1rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo">✦</div>
+    <div>
+      <div class="topbar-name">Registro de Interesados al Bautismo</div>
+      <div class="topbar-sub">Gestión Anual</div>
+    </div>
+  </div>
+  <div class="topbar-year" id="topbarYear"></div>
+</div>
+
+<div class="container">
+  <div class="breadcrumb" id="breadcrumb">
+    <span>Inicio</span> <span>›</span> <span class="bc-active">Selección de grupo</span>
+  </div>
+  <div class="page-header">
+    <h1 id="pageTitle">Registro de Interesados al Bautismo</h1>
+    <p id="pageSubtitle">Selecciona el grupo para ver sus iglesias y registrar interesados</p>
+  </div>
+
+  <!-- PASO 1 -->
+  <div id="step1">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-header-icon">1</div>
+          <div class="card-header-text">
+            <h2>Selección de grupo</h2>
+            <p>Las iglesias se cargarán agrupadas por agrupación</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div id="loadingState" class="loading-state">
+          <div class="spinner"></div>
+          <span>Cargando datos desde Google Sheets...</span>
+        </div>
+        <div id="formStep1" style="display:none;">
+          <div class="field">
+            <label>Grupo</label>
+            <select id="selGrupo">
+              <option value="">— Selecciona un grupo —</option>
+            </select>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary btn-lg" id="btnVerSubgrupos" disabled onclick="irPaso2()">Ver iglesias →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 2 -->
+  <div id="step2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-header-icon" style="background:var(--navy);">2</div>
+          <div class="card-header-text">
+            <h2 id="step2Title">Iglesias</h2>
+            <p>Haz clic en "Registrar" para ingresar interesados de una iglesia</p>
+          </div>
+        </div>
+        <button class="btn btn-outline" style="padding:7px 14px;font-size:12px;white-space:nowrap;" onclick="irPaso1()">← Cambiar grupo</button>
+      </div>
+      <div class="card-body">
+        <div class="group-totals" id="groupTotals"></div>
+        <div class="data-legend">
+          <div class="legend-item"><div class="legend-dot l-consol"></div><span><strong>Bautismos</strong> — datos consolidados del ACMS (solo lectura)</span></div>
+          <div class="legend-item"><div class="legend-dot l-inter"></div><span><strong>Interesados al bautismo</strong> — registrados desde este sistema</span></div>
+        </div>
+        <div class="table-wrap">
+          <table id="subgruposTable">
+            <thead>
+              <tr>
+                <th>Iglesia</th>
+                <th>Responsable</th>
+                <th class="th-c">Bautismos (consolidado)</th>
+                <th class="th-c">% del blanco</th>
+                <th class="th-i">Interesados</th>
+                <th class="th-i" style="text-align:center;">Por mes</th>
+                <th class="th-i" style="text-align:center;">% Proyección</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tablaTbody"></tbody>
+          </table>
+        </div>
+        <div class="btn-row" style="margin-top:1.25rem;">
+          <button class="btn btn-outline" onclick="irPaso1()">← Cambiar grupo</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal flotante de registro -->
+  <div class="modal-overlay" id="regPanel" onclick="handleOverlayClick(event)">
+    <div class="modal-box" id="modalBox">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="reg-panel-icon">✎</div>
+          <div>
+            <div class="reg-title" id="regTitle">Registrar interesados</div>
+            <div class="reg-sub" id="regSub">Selecciona el sábado e ingresa la cantidad</div>
+          </div>
+        </div>
+        <button class="modal-close" onclick="cerrarPanel()" title="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="inter-tag"><div class="inter-dot"></div>Interesados al bautismo — registro semanal</div>
+        <div class="panel-monthly" id="panelMonthly">
+          <div class="panel-monthly-title">Resumen mensual de interesados</div>
+          <div class="pm-grid" id="pmGrid"></div>
+        </div>
+        <div class="sec-label green">Filtrar por mes</div>
+        <div class="month-tabs" id="monthTabs"></div>
+        <div class="sec-label green" id="satLabel">Sábados</div>
+        <div class="sat-grid" id="satGrid"><div class="empty-msg">Selecciona un mes</div></div>
+        <div id="numFieldWrap" style="display:none;">
+          <hr class="section-divider">
+          <div class="num-field">
+            <label id="numLabel">Interesados al bautismo</label>
+            <div class="num-row">
+              <button class="num-btn5" onclick="cambiarNum(-5)">−5</button>
+              <button class="num-btn" onclick="cambiarNum(-1)">−</button>
+              <input type="number" id="inputCantidad" min="0" max="999" value="0">
+              <button class="num-btn" onclick="cambiarNum(1)">+</button>
+              <button class="num-btn5" onclick="cambiarNum(5)">+5</button>
+            </div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-outline" onclick="cerrarPanel()">Cerrar</button>
+          <button class="btn btn-success btn-lg" id="btnGuardar" disabled onclick="guardar()">
+            <div class="btn-spinner" id="btnSpinner"></div>
+            <span id="btnGuardarTxt">Guardar interesados</span>
+          </button>
+        </div>
+        <div class="toast toast-ok" id="toastOk">✓ &nbsp;<span id="toastOkMsg">Registro guardado.</span></div>
+        <div class="toast toast-err" id="toastErr">✕ &nbsp;<span id="toastErrMsg">Error al guardar.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzca5dIEMy3XqDnzGb-bxtkeJMUy77tsT6WwNcqCT5uqkzjURQ3lEsSdf4zJACeb5J0Hw/exec";
+const MESES      = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+const MESES_FULL = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+
+let todosGrupos   = [];
+let gruposMap     = {};  // { "01. La Paz": [...iglesias] }
+let agrupMap      = {};  // { "01. La Paz": { "Agrup A": [...], ... } }
+let grupoSelKey   = null;
+let iglesiaActual = null;
+let iglesiaIdx    = null;
+let sabadoSel     = null;
+let mesFiltro     = new Date().getMonth();
+let todosSabados  = [];
+
+document.getElementById("topbarYear").textContent = "Año " + new Date().getFullYear();
+
+function generarSabadosAnio() {
+  const anio = new Date().getFullYear(), sabs = [];
+  let d = new Date(anio, 0, 1);
+  while (d.getDay() !== 6) d.setDate(d.getDate() + 1);
+  while (d.getFullYear() === anio) { sabs.push(new Date(d)); d.setDate(d.getDate() + 7); }
+  return sabs;
+}
+
+// ── Cargar grupos ──
+async function cargarGrupos() {
+  todosSabados = generarSabadosAnio();
+  try {
+    const res = await fetch(APPS_SCRIPT_URL + "?action=getGrupos", { method:"GET", redirect:"follow", credentials:"omit" });
+    const json = await res.json();
+    if (!json.data) throw new Error(json.error || "Sin datos");
+    procesarGrupos(json.data);
+  } catch(e) { cargarJsonp(); }
+}
+
+function cargarJsonp() {
+  window._cb = function(json) {
+    try {
+      if (!json.data) throw new Error(json.error || "Sin datos");
+      procesarGrupos(json.data);
+    } catch(e) { mostrarErrorCarga(e.message); }
+  };
+  const s = document.createElement("script");
+  s.src = APPS_SCRIPT_URL + "?action=getGrupos&callback=_cb";
+  s.onerror = () => mostrarErrorCarga("No se pudo conectar");
+  document.head.appendChild(s);
+}
+
+function procesarGrupos(data) {
+  todosGrupos = data;
+  gruposMap = {};
+  agrupMap  = {};
+
+  data.forEach(g => {
+    const grupo = String(g.grupo      || "Sin grupo").trim();
+    const agrup = String(g.agrupacion || "Sin agrupación").trim();
+
+    if (!gruposMap[grupo]) gruposMap[grupo] = [];
+    gruposMap[grupo].push(g);
+
+    if (!agrupMap[grupo]) agrupMap[grupo] = {};
+    if (!agrupMap[grupo][agrup]) agrupMap[grupo][agrup] = [];
+    agrupMap[grupo][agrup].push(g);
+  });
+
+  const sel = document.getElementById("selGrupo");
+  Object.keys(gruposMap).sort().forEach(key => {
+    const opt = document.createElement("option");
+    opt.value = key;
+    const n = gruposMap[key].length;
+    opt.textContent = key + "  (" + n + " iglesia" + (n > 1 ? "s" : "") + ")";
+    sel.appendChild(opt);
+  });
+
+  document.getElementById("loadingState").style.display = "none";
+  document.getElementById("formStep1").style.display = "block";
+}
+
+function mostrarErrorCarga(msg) {
+  document.getElementById("loadingState").innerHTML =
+    `<div style="color:#b91c1c;font-size:13px;"><strong>Error al conectar</strong><br>
+    <span style="color:#7a8fa3;font-size:12px;">${msg}</span><br>
+    <button onclick="location.reload()" style="margin-top:10px;padding:7px 14px;background:#1565c0;color:white;border:none;border-radius:4px;font-size:12px;cursor:pointer;font-weight:600;">Reintentar</button></div>`;
+}
+
+document.getElementById("selGrupo").addEventListener("change", function() {
+  document.getElementById("btnVerSubgrupos").disabled = this.value === "";
+});
+
+// ── Paso 2 ──
+function irPaso2() {
+  grupoSelKey = document.getElementById("selGrupo").value;
+  if (!grupoSelKey) return;
+  document.getElementById("step1").style.display = "none";
+  document.getElementById("step2").style.display = "block";
+  document.getElementById("regPanel").classList.remove("open"); document.body.style.overflow = "";
+  iglesiaActual = null; sabadoSel = null;
+  document.getElementById("pageTitle").textContent    = grupoSelKey;
+  document.getElementById("pageSubtitle").textContent = "Iglesias del grupo · Clic en Registrar para ingresar interesados";
+  document.getElementById("step2Title").textContent   = grupoSelKey;
+  document.getElementById("breadcrumb").innerHTML =
+    `<span class="bc-link" onclick="irPaso1()">Inicio</span> <span>›</span> <span class="bc-active">${grupoSelKey}</span>`;
+  renderTotales();
+  renderTabla();
+}
+
+function calcularInteresados(g) {
+  if (!g.sabados) return 0;
+  return Object.values(g.sabados).reduce((s, v) => s + (parseInt(v) || 0), 0);
+}
+
+function renderTotales() {
+  const iglesias   = gruposMap[grupoSelKey] || [];
+  const totalBaut  = iglesias.reduce((s, g) => s + (parseInt(g.total) || 0), 0);
+  const totalInter = iglesias.reduce((s, g) => s + calcularInteresados(g), 0);
+  const nAgrup     = Object.keys(agrupMap[grupoSelKey] || {}).length;
+  document.getElementById("groupTotals").innerHTML = `
+    <div class="total-box tb-neutral"><div class="tb-label">Agrupaciones</div><div class="tb-val">${nAgrup}</div><div class="tb-note">${iglesias.length} iglesias en total</div></div>
+    <div class="total-box tb-blue"><div class="tb-label">Bautismos consolidados</div><div class="tb-val">${totalBaut}</div><div class="tb-note">Datos oficiales del ACMS</div></div>
+    <div class="total-box tb-green"><div class="tb-label">Interesados al bautismo</div><div class="tb-val">${totalInter}</div><div class="tb-note">Registrados en este sistema</div></div>`;
+}
+
+function encodeKey(grupo, iglesia) {
+  return (grupo + "||" + iglesia).replace(/['"]/g, "");
+}
+
+function renderTabla() {
+  const tbody      = document.getElementById("tablaTbody");
+  tbody.innerHTML  = "";
+  const agrupaciones = agrupMap[grupoSelKey] || {};
+  const agrupKeys    = Object.keys(agrupaciones).sort();
+
+  agrupKeys.forEach((agrupNombre, ai) => {
+    const iglesias    = agrupaciones[agrupNombre];
+    const blancoAgrup = parseInt(iglesias[0]?.blancoAnual) || 0;
+    const totalAgrup  = iglesias.reduce((s, g) => s + (parseInt(g.total) || 0), 0);
+    const interAgrup  = iglesias.reduce((s, g) => s + calcularInteresados(g), 0);
+    const pctAgrup    = blancoAgrup > 0 ? Math.round((totalAgrup / blancoAgrup) * 100) : 0;
+    const fillAgrup   = Math.min(pctAgrup, 100);
+    const pctProyec   = blancoAgrup > 0 ? Math.round(((totalAgrup + interAgrup) / blancoAgrup) * 100) + "%" : "—";
+
+    if (ai > 0) {
+      const spacer = document.createElement("tr");
+      spacer.className = "agrup-spacer";
+      spacer.innerHTML = `<td colspan="8"></td>`;
+      tbody.appendChild(spacer);
+    }
+
+    // Fila cabecera agrupación — 8 columnas
+    const trAgrup = document.createElement("tr");
+    trAgrup.className = "agrup-row";
+    trAgrup.innerHTML = `
+      <td colspan="2">
+        <div class="agrup-name">${agrupNombre}</div>
+        <div class="agrup-meta">${iglesias.length} iglesia${iglesias.length > 1 ? "s" : ""}</div>
+        <div class="agrup-progress">
+          <div class="agrup-track"><div class="agrup-fill" style="width:${fillAgrup}%"></div></div>
+          <span class="agrup-pct">${pctAgrup}% del blanco</span>
+        </div>
+      </td>
+      <td style="text-align:center;vertical-align:middle;">
+        <div class="agrup-blanco-lbl">Bautismos</div>
+        <div class="agrup-blanco-val">${totalAgrup}</div>
+      </td>
+      <td style="text-align:center;vertical-align:middle;">
+        <div class="agrup-blanco-lbl">Blanco anual del Distrito</div>
+        <div class="agrup-blanco-val">${blancoAgrup}</div>
+      </td>
+      <td style="text-align:center;vertical-align:middle;">
+        <div class="agrup-blanco-lbl" style="color:#6ee7b7;">Interesados</div>
+        <div class="agrup-blanco-val" style="color:#6ee7b7;">${interAgrup > 0 ? interAgrup : "—"}</div>
+      </td>
+      <td style="text-align:center;vertical-align:middle;">
+        <button class="btn-agrup-expand" id="ae-btn-${ai}" data-ai="${ai}">▸ Ver meses</button>
+      </td>
+      <td style="text-align:center;vertical-align:middle;">
+        <div class="agrup-blanco-lbl" style="color:#fcd34d;">% Proyección</div>
+        <div class="agrup-blanco-val" style="color:#fcd34d;">${pctProyec}</div>
+      </td>
+      <td></td>`;
+    tbody.appendChild(trAgrup);
+    trAgrup.querySelector(".btn-agrup-expand").addEventListener("click", (e) => { e.stopPropagation(); toggleAgrupExpand(ai); });
+
+    // Fila expandible agrupación
+    const trAgrupExp = document.createElement("tr");
+    trAgrupExp.className = "agrup-expand-row hidden";
+    trAgrupExp.dataset.agrupIdx = ai;
+    trAgrupExp.innerHTML = `<td colspan="8"><div class="agrup-expand-inner" id="ae-inner-${ai}"></div></td>`;
+    tbody.appendChild(trAgrupExp);
+
+    // Filas de iglesias
+    iglesias.forEach((g) => {
+      const key    = encodeKey(g.grupo, g.iglesia);
+      const consol = parseInt(g.total) || 0;
+      const inter  = calcularInteresados(g);
+      const pct    = blancoAgrup > 0 ? Math.round((consol / blancoAgrup) * 100) : 0;
+      const fill   = Math.min(pct, 100);
+      const pctIg  = blancoAgrup > 0 ? Math.round(((consol + inter) / blancoAgrup) * 100) + "%" : "—";
+
+      const tr = document.createElement("tr");
+      tr.className = "iglesia-row";
+      tr.dataset.key = key;
+      tr.innerHTML = `
+        <td class="td-iglesia">${g.iglesia || "—"}</td>
+        <td class="td-resp">${g.responsable || "—"}</td>
+        <td class="td-consol">
+          <div class="mini-bar-wrap">
+            <div class="mini-bar"><div class="mini-bar-fill" style="width:${fill}%"></div></div>
+            <span>${consol}</span>
+          </div>
+        </td>
+        <td class="td-consol" style="text-align:center;">
+          <span class="badge ${pct >= 100 ? "badge-green" : pct >= 50 ? "badge-blue" : "badge-warn"}">${pct}%</span>
+        </td>
+        <td class="td-inter">${inter > 0 ? inter : '<span style="color:#7a8fa3;font-weight:400;">—</span>'}</td>
+        <td style="text-align:center;">
+          <button class="btn-expand" id="expand-${key}" data-ekey="${key}">▸ Ver meses</button>
+        </td>
+        <td style="text-align:center;">
+          <span class="badge ${pct >= 100 ? "badge-green" : "badge-blue"}">${pctIg}</span>
+        </td>
+        <td style="text-align:right;">
+          <button class="btn-registrar" data-rkey="${key}">Registrar</button>
+        </td>`;
+      tbody.appendChild(tr);
+      // Attach events safely
+      tr.querySelector(".btn-expand").addEventListener("click", (e) => { e.stopPropagation(); toggleExpand(key); });
+      tr.querySelector(".btn-registrar").addEventListener("click", (e) => { e.stopPropagation(); abrirPanel(key); });
+
+      // Fila expandible iglesia
+      const trExp = document.createElement("tr");
+      trExp.className = "expand-row hidden";
+      trExp.dataset.expandKey = key;
+      trExp.innerHTML = `<td colspan="8"><div class="expand-inner" id="expand-inner-${key}"></div></td>`;
+      tbody.appendChild(trExp);
+    });
+  });
+
+  // Mapa key → iglesia
+  const lookup = {};
+  (gruposMap[grupoSelKey] || []).forEach(g => { lookup[encodeKey(g.grupo, g.iglesia)] = g; });
+  window._iglesiaLookup = lookup;
+
+  // Mapa idx → agrupNombre
+  window._agrupIdxMap = {};
+  agrupKeys.forEach((nombre, i) => { window._agrupIdxMap[i] = nombre; });
+}
+
+// ── Expandir agrupación ──
+function toggleAgrupExpand(ai) {
+  const trExp = document.querySelector(`.agrup-expand-row[data-agrup-idx="${ai}"]`);
+  const btn   = document.getElementById("ae-btn-" + ai);
+  if (!trExp) return;
+  if (trExp.classList.contains("hidden")) {
+    renderAgrupMonths(ai);
+    trExp.classList.remove("hidden");
+    btn.textContent = "▾ Ocultar";
+    btn.classList.add("ae-expanded");
+  } else {
+    trExp.classList.add("hidden");
+    btn.textContent = "▸ Ver meses";
+    btn.classList.remove("ae-expanded");
+  }
+}
+
+function renderAgrupMonths(ai) {
+  const agrupNombre = window._agrupIdxMap[ai] || "";
+  const iglesias    = agrupMap[grupoSelKey][agrupNombre] || [];
+  const container   = document.getElementById("ae-inner-" + ai);
+  if (!container) return;
+  const mesActual  = new Date().getMonth();
+  const porMes     = Array(12).fill(0);
+  const totalInter = iglesias.reduce((s, g) => s + calcularInteresados(g), 0);
+  iglesias.forEach(g => {
+    if (!g.sabados) return;
+    Object.entries(g.sabados).forEach(([fecha, cant]) => {
+      porMes[new Date(fecha).getMonth()] += parseInt(cant) || 0;
+    });
+  });
+  const cells = MESES.map((m, i) => {
+    const val = porMes[i];
+    const cls = i === mesActual ? "am-current" : val > 0 ? "am-active" : "";
+    return `<div class="am-cell ${cls}"><div class="am-name">${m}</div><div class="am-val">${val > 0 ? val : "·"}</div></div>`;
+  }).join("");
+  container.innerHTML = `
+    <div class="agrup-expand-title">Interesados por mes &nbsp;<span style="color:rgba(255,255,255,0.4);font-weight:400;">Total: ${totalInter}</span></div>
+    <div class="agrup-months-grid">${cells}</div>`;
+}
+
+// ── Expandir iglesia ──
+function toggleExpand(key) {
+  const trExp = document.querySelector(`.expand-row[data-expand-key="${key}"]`);
+  const btn   = document.getElementById("expand-" + key);
+  if (!trExp) return;
+  if (trExp.classList.contains("hidden")) {
+    renderExpandMonths(key);
+    trExp.classList.remove("hidden");
+    btn.textContent = "▾ Ocultar";
+    btn.classList.add("expanded");
+  } else {
+    trExp.classList.add("hidden");
+    btn.textContent = "▸ Ver meses";
+    btn.classList.remove("expanded");
+  }
+}
+
+function renderExpandMonths(key) {
+  const container = document.getElementById("expand-inner-" + key);
+  const g         = window._iglesiaLookup[key];
+  if (!container || !g) return;
+  const mesActual  = new Date().getMonth();
+  const totalInter = calcularInteresados(g);
+  const porMes     = Array(12).fill(0);
+  if (g.sabados) {
+    Object.entries(g.sabados).forEach(([fecha, cant]) => {
+      porMes[new Date(fecha).getMonth()] += parseInt(cant) || 0;
+    });
+  }
+  const cells = MESES.map((m, i) => {
+    const val = porMes[i];
+    const cls = i === mesActual ? "ms-current" : val > 0 ? "ms-active" : "";
+    return `<div class="ms-cell ${cls}"><div class="ms-name">${m}</div><div class="ms-val">${val > 0 ? val : "·"}</div></div>`;
+  }).join("");
+  container.innerHTML = `
+    <div class="expand-title">Interesados por mes · ${g.iglesia} &nbsp;<span style="font-weight:400;color:var(--text-muted);font-size:11px;">Total: ${totalInter}</span></div>
+    <div class="months-summary">${cells}</div>`;
+}
+
+// ── Panel de registro ──
+function abrirPanel(key) {
+  iglesiaActual = window._iglesiaLookup[key];
+  iglesiaIdx    = key;
+  sabadoSel     = null;
+  mesFiltro     = new Date().getMonth();
+  document.querySelectorAll(".iglesia-row").forEach(r => r.classList.remove("ir-sel"));
+  const tr = document.querySelector(`.iglesia-row[data-key="${key}"]`);
+  if (tr) tr.classList.add("ir-sel");
+  document.getElementById("regTitle").textContent = iglesiaActual.iglesia || iglesiaActual.grupo;
+  document.getElementById("regSub").textContent   = iglesiaActual.responsable + " · " + iglesiaActual.agrupacion;
+  document.getElementById("regPanel").classList.add("open");
+  document.body.style.overflow = "hidden";
+  document.getElementById("numFieldWrap").style.display = "none";
+  document.getElementById("btnGuardar").disabled = true;
+  ocultarToasts();
+  renderPanelMonthly();
+  renderMonthTabs();
+  renderSabados(mesFiltro);
+
+}
+
+function cerrarPanel() {
+  document.getElementById("regPanel").classList.remove("open");
+  document.body.style.overflow = "";
+  document.querySelectorAll(".iglesia-row").forEach(r => r.classList.remove("ir-sel"));
+  // Refrescar tabla solo al cerrar
+  if (window._tablaNeedsRefresh) {
+    renderTotales();
+    renderTabla();
+    window._tablaNeedsRefresh = false;
+  }
+  iglesiaActual = null; sabadoSel = null;
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById("regPanel")) cerrarPanel();
+}
+
+function irATabla() {
+  document.getElementById("tablaTbody").scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+function renderPanelMonthly() {
+  if (!iglesiaActual) return;
+  const mesActual = new Date().getMonth();
+  const porMes    = Array(12).fill(0);
+  if (iglesiaActual.sabados) {
+    Object.entries(iglesiaActual.sabados).forEach(([fecha, cant]) => {
+      porMes[new Date(fecha).getMonth()] += parseInt(cant) || 0;
+    });
+  }
+  const grid = document.getElementById("pmGrid");
+  if (!grid) return;
+  grid.innerHTML = MESES.map((m, i) => {
+    const val = porMes[i];
+    const cls = i === mesActual ? "pm-current" : val > 0 ? "pm-active" : "";
+    return `<div class="pm-cell ${cls}"><div class="pm-name">${m}</div><div class="pm-val" style="${val === 0 ? "color:var(--border)" : ""}">${val > 0 ? val : "·"}</div></div>`;
+  }).join("");
+}
+
+function renderMonthTabs() {
+  const c = document.getElementById("monthTabs");
+  c.innerHTML = "";
+  MESES.forEach((m, i) => {
+    const tieneData = todosSabados.filter(s => s.getMonth() === i)
+      .some(s => (iglesiaActual.sabados?.[s.toISOString().split("T")[0]] || 0) > 0);
+    const tab = document.createElement("button");
+    tab.className = "month-tab" + (tieneData ? " mt-data" : "") + (i === mesFiltro ? " mt-sel" : "");
+    tab.textContent = m;
+    tab.addEventListener("click", () => {
+      mesFiltro = i;
+      document.querySelectorAll(".month-tab").forEach(t => t.classList.remove("mt-sel"));
+      tab.classList.add("mt-sel");
+      sabadoSel = null;
+      document.getElementById("numFieldWrap").style.display = "none";
+      document.getElementById("btnGuardar").disabled = true;
+      ocultarToasts();
+      renderSabados(i);
+    });
+    c.appendChild(tab);
+  });
+}
+
+function renderSabados(mesIdx) {
+  document.getElementById("satLabel").textContent = "Sábados de " + MESES_FULL[mesIdx];
+  const c = document.getElementById("satGrid");
+  c.innerHTML = "";
+  const sabs = todosSabados.filter(s => s.getMonth() === mesIdx);
+  if (!sabs.length) { c.innerHTML = '<div class="empty-msg">No hay sábados en este mes</div>'; return; }
+  sabs.forEach(s => {
+    const key  = s.toISOString().split("T")[0];
+    const prev = parseInt(iglesiaActual.sabados?.[key]) || 0;
+    const card = document.createElement("div");
+    card.className = "sat-card" + (prev > 0 ? " sc-data" : "");
+    card.innerHTML = `<div class="sc-day">${s.getDate()}</div><div class="sc-month">${MESES[mesIdx]} ${s.getFullYear()}</div>${prev > 0 ? `<div class="sc-prev">✓ ${prev}</div>` : ""}`;
+    card.addEventListener("click", () => seleccionarSabado(card, s, key, prev));
+    c.appendChild(card);
+  });
+}
+
+function seleccionarSabado(el, fecha, key, prevVal) {
+  document.querySelectorAll(".sat-card").forEach(c => c.classList.remove("sc-sel"));
+  el.classList.add("sc-sel");
+  sabadoSel = { fecha, key, mes: fecha.getMonth() };
+  document.getElementById("numLabel").textContent = "Interesados al bautismo — sáb. " + fecha.getDate() + " de " + MESES_FULL[fecha.getMonth()];
+  document.getElementById("inputCantidad").value = prevVal || 0;
+  document.getElementById("numFieldWrap").style.display = "block";
+  document.getElementById("btnGuardar").disabled = false;
+  ocultarToasts();
+}
+
+function cambiarNum(delta) {
+  const inp = document.getElementById("inputCantidad");
+  inp.value = Math.max(0, (parseInt(inp.value) || 0) + delta);
+}
+
+async function guardar() {
+  if (!sabadoSel || !iglesiaActual) return;
+  const cantidad = Math.max(0, parseInt(document.getElementById("inputCantidad").value) || 0);
+  setGuardando(true); ocultarToasts();
+  const payload = { action:"guardarInteresados", grupo:iglesiaActual.grupo, iglesia:iglesiaActual.iglesia, fecha:sabadoSel.key, mes:sabadoSel.mes, cantidad };
+  try {
+    await fetch(APPS_SCRIPT_URL, { method:"POST", mode:"no-cors", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) });
+    if (!iglesiaActual.sabados) iglesiaActual.sabados = {};
+    iglesiaActual.sabados[sabadoSel.key] = cantidad;
+    // Marcar que la tabla necesita refrescarse al cerrar
+    window._tablaNeedsRefresh = true;
+    // Refrescar solo el panel mensual
+    renderPanelMonthly();
+    renderMonthTabs();
+    renderSabados(mesFiltro);
+    document.getElementById("toastOkMsg").textContent = cantidad + " interesado(s) guardados — sáb. " + sabadoSel.fecha.getDate() + " de " + MESES_FULL[sabadoSel.mes] + ".";
+    document.getElementById("toastOk").style.display = "flex";
+    sabadoSel = null;
+    document.getElementById("numFieldWrap").style.display = "none";
+    document.getElementById("btnGuardar").disabled = true;
+  } catch(err) {
+    document.getElementById("toastErrMsg").textContent = "Error: " + err.message;
+    document.getElementById("toastErr").style.display = "flex";
+  } finally { setGuardando(false); }
+}
+
+function setGuardando(v) {
+  document.getElementById("btnGuardar").disabled = v;
+  document.getElementById("btnSpinner").style.display = v ? "block" : "none";
+  document.getElementById("btnGuardarTxt").textContent = v ? "Guardando..." : "Guardar interesados";
+}
+function ocultarToasts() {
+  document.getElementById("toastOk").style.display = "none";
+  document.getElementById("toastErr").style.display = "none";
+}
+function irPaso1() {
+  document.getElementById("step2").style.display = "none";
+  document.getElementById("step1").style.display = "block";
+  grupoSelKey = null; iglesiaActual = null; sabadoSel = null;
+  document.getElementById("selGrupo").value = "";
+  document.getElementById("btnVerSubgrupos").disabled = true;
+  document.getElementById("pageTitle").textContent    = "Registro de Interesados al Bautismo";
+  document.getElementById("pageSubtitle").textContent = "Selecciona el grupo para ver sus iglesias y registrar interesados";
+  document.getElementById("breadcrumb").innerHTML = `<span>Inicio</span> <span>›</span> <span class="bc-active">Selección de grupo</span>`;
+}
+
+cargarGrupos();
+</script>
+</body>
+</html>
