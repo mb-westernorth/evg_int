@@ -30,7 +30,6 @@
 }
 body { font-family: 'Source Sans 3', sans-serif; background: var(--silver); min-height: 100vh; color: var(--text); font-size: 14px; }
 
-/* Topbar */
 .topbar { background: var(--navy); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
 .topbar-brand { display: flex; align-items: center; gap: 12px; }
 .topbar-logo { width: 32px; height: 32px; background: var(--blue); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; }
@@ -38,7 +37,6 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--silver); min-
 .topbar-sub { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; text-transform: uppercase; }
 .topbar-year { font-size: 12px; color: rgba(255,255,255,0.45); }
 
-/* Layout */
 .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
 .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); margin-bottom: 1rem; flex-wrap: wrap; }
 .bc-link { color: var(--blue); cursor: pointer; } .bc-link:hover { text-decoration: underline; }
@@ -47,7 +45,6 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--silver); min-
 .page-header h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 600; color: var(--navy); margin-bottom: 3px; }
 .page-header p { font-size: 13px; color: var(--text-muted); }
 
-/* Cards */
 .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); margin-bottom: 1rem; overflow: hidden; }
 .card-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--silver); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .card-header-left { display: flex; align-items: center; gap: 10px; }
@@ -56,19 +53,16 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--silver); min-
 .card-header-text p { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
 .card-body { padding: 1.5rem; }
 
-/* Loading */
 .loading-state { display: flex; align-items: center; gap: 12px; padding: 2rem; color: var(--text-muted); font-size: 13px; }
 .spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Form */
 .field { margin-bottom: 1rem; }
 .field label { display: block; font-size: 11px; font-weight: 600; color: var(--text-mid); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 5px; }
 select, input[type="number"] { width: 100%; padding: 9px 12px; background: var(--white); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); font-family: 'Source Sans 3', sans-serif; font-size: 14px; outline: none; appearance: none; transition: border-color 0.15s, box-shadow 0.15s; cursor: pointer; }
 select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a8fa3' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 32px; }
 select:focus, input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(21,101,192,0.1); }
 
-/* Leyenda */
 .data-legend { display: flex; gap: 1.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; padding: 10px 14px; background: var(--silver); border: 1px solid var(--border); border-radius: var(--radius); }
 .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-mid); }
 .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
@@ -77,7 +71,6 @@ select:focus, input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgb
 
 /* Dashboard panel */
 .dashboard-panel { display: grid; grid-template-columns: 55% 1fr; gap: 1rem; margin-bottom: 1.5rem; align-items: stretch; }
-/* Totales — 2 filas × 2 columnas */
 .group-totals { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
 .total-box { border-radius: var(--radius); padding: 0.9rem 1.1rem; border: 1px solid; }
 .total-box .tb-label { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 4px; }
@@ -91,7 +84,7 @@ select:focus, input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgb
 .tb-green .tb-label { color: var(--success); } .tb-green .tb-val { color: var(--success); }
 .tb-orange { background: #fff7ed; border-color: #fed7aa; }
 .tb-orange .tb-label { color: #c2410c; } .tb-orange .tb-val { color: #c2410c; }
-/* Chart panel — gráfico vertical apilado */
+
 .chart-panel { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1rem 0.75rem; display: flex; flex-direction: column; }
 .chart-panel-title { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; flex-shrink: 0; }
 .chart-legend { display: flex; gap: 12px; margin-bottom: 10px; flex-shrink: 0; }
@@ -99,15 +92,12 @@ select:focus, input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgb
 .chart-legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
 .chart-legend-dot.ld-consol { background: #60a5fa; }
 .chart-legend-dot.ld-pend   { background: #6ee7b7; }
-/* Columnas */
 .chart-cols { flex: 1; display: flex; align-items: flex-end; gap: 6px; min-height: 120px; padding-bottom: 0; }
 .chart-col { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 0; gap: 3px; }
-/* Etiqueta encima de la barra — dos líneas */
 .chart-col-val { display: flex; flex-direction: column; align-items: center; gap: 1px; flex-shrink: 0; }
 .chart-col-val-consol { font-size: 10px; font-weight: 700; color: #60a5fa; line-height: 1; white-space: nowrap; }
 .chart-col-val-pend   { font-size: 10px; font-weight: 700; color: #6ee7b7; line-height: 1; white-space: nowrap; }
 .chart-col-val-zero   { font-size: 10px; color: var(--border); line-height: 1; }
-/* Barra apilada */
 .chart-col-bar-wrap { width: 100%; background: var(--silver); border-radius: var(--radius-sm) var(--radius-sm) 0 0; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
 .chart-col-seg-consol { width: 100%; background: linear-gradient(180deg, #93c5fd 0%, #60a5fa 100%); flex-shrink: 0; transition: height 0.5s cubic-bezier(0.34,1.1,0.64,1) 0.05s; }
 .chart-col-seg-pend   { width: 100%; background: linear-gradient(180deg, #a7f3d0 0%, #6ee7b7 100%); border-radius: var(--radius-sm) var(--radius-sm) 0 0; flex-shrink: 0; transition: height 0.5s cubic-bezier(0.34,1.1,0.64,1); }
@@ -116,14 +106,9 @@ select:focus, input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgb
 .chart-labels { display: flex; gap: 6px; margin-top: 6px; padding-bottom: 4px; }
 .chart-col-label { flex: 1; min-width: 0; font-size: 9.5px; font-weight: 600; color: var(--text-muted); text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; letter-spacing: 0.03em; }
 .chart-empty { font-size: 12px; color: var(--text-muted); text-align: center; padding: 2rem 0; }
-@media (max-width: 860px) {
-  .dashboard-panel { grid-template-columns: 1fr; }
-}
-@media (max-width: 600px) {
-  .group-totals { grid-template-columns: 1fr 1fr; }
-}
+@media (max-width: 860px) { .dashboard-panel { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .group-totals { grid-template-columns: 1fr 1fr; } }
 
-/* Tabla */
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border); border-radius: var(--radius-lg); }
 table { width: 100%; min-width: 900px; border-collapse: collapse; font-size: 13px; }
 thead tr { background: var(--navy); }
@@ -131,7 +116,6 @@ thead th { padding: 8px 10px; text-align: left; font-size: 10px; font-weight: 60
 thead th.th-c { color: #93c5fd; }
 thead th.th-i { color: #6ee7b7; }
 
-/* Fila agrupación */
 tr.agrup-row td { background: #1e3a5f; padding: 9px 10px; border-top: 3px solid var(--navy); }
 tr.agrup-row .agrup-name { font-size: 13px; font-weight: 600; color: white; }
 tr.agrup-row .agrup-meta { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 1px; }
@@ -146,12 +130,10 @@ tr.agrup-row .agrup-meta { font-size: 11px; color: rgba(255,255,255,0.5); margin
 .agrup-blanco-lbl { font-size: 10px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; text-align: center; }
 .agrup-blanco-val { font-size: 15px; font-weight: 700; color: #93c5fd; text-align: center; }
 
-/* Botón expandir agrupación */
 .btn-agrup-expand { background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 99px; cursor: pointer; color: rgba(255,255,255,0.6); font-size: 11px; padding: 3px 10px; transition: all 0.15s; font-family: 'Source Sans 3', sans-serif; font-weight: 500; white-space: nowrap; }
 .btn-agrup-expand:hover { background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.4); }
 .btn-agrup-expand.ae-expanded { background: rgba(110,231,183,0.15); color: #6ee7b7; border-color: rgba(110,231,183,0.4); }
 
-/* Fila expandible agrupación */
 tr.agrup-expand-row td { padding: 0; background: #1a2e44; border-bottom: 2px solid var(--navy); }
 tr.agrup-expand-row.hidden { display: none; }
 .agrup-expand-inner { padding: 12px 16px; }
@@ -168,7 +150,6 @@ tr.agrup-expand-row.hidden { display: none; }
 .am-cell.am-active .am-val { color: #6ee7b7; }
 .am-cell.am-current .am-val { color: #93c5fd; }
 
-/* Filas iglesia */
 tr.iglesia-row { border-bottom: 1px solid var(--border); transition: background 0.1s; }
 tr.iglesia-row:hover { background: #f0f5fb; }
 tr.iglesia-row.ir-sel { background: var(--blue-pale); }
@@ -187,12 +168,10 @@ tr.iglesia-row td { padding: 9px 10px; vertical-align: middle; }
 .btn-registrar { padding: 5px 13px; background: var(--blue); color: white; border: none; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Source Sans 3', sans-serif; transition: background 0.15s; white-space: nowrap; }
 .btn-registrar:hover { background: var(--blue-hover); }
 
-/* Botón expandir iglesia */
 .btn-expand { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 12px; padding: 4px 6px; transition: all 0.15s; font-family: 'Source Sans 3', sans-serif; font-weight: 500; white-space: nowrap; }
 .btn-expand:hover { color: var(--blue); }
 .btn-expand.expanded { color: var(--success); }
 
-/* Fila expandible iglesia */
 tr.expand-row td { padding: 0; background: #f8fafd; border-bottom: 2px solid var(--border); }
 tr.expand-row.hidden { display: none; }
 .expand-inner { padding: 14px 16px; }
@@ -208,10 +187,8 @@ tr.expand-row.hidden { display: none; }
 .ms-val { font-size: 16px; font-weight: 600; color: var(--navy); margin-top: 2px; }
 .ms-cell.ms-active .ms-val { color: var(--success); }
 
-/* Spacer */
 tr.agrup-spacer td { height: 6px; background: var(--silver); padding: 0; border: none; }
 
-/* Panel de registro */
 .reg-panel { background: var(--success-bg); border: 1px solid var(--success-bd); border-radius: var(--radius-lg); padding: 1.5rem; margin-top: 1rem; }
 .reg-panel-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--success-bd); }
 .reg-panel-icon { width: 32px; height: 32px; background: var(--success); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; flex-shrink: 0; }
@@ -220,7 +197,6 @@ tr.agrup-spacer td { height: 6px; background: var(--silver); padding: 0; border:
 .inter-tag { display: inline-flex; align-items: center; gap: 6px; background: white; border: 1px solid var(--success-bd); border-radius: 99px; padding: 4px 12px; font-size: 11px; font-weight: 600; color: var(--success); margin-bottom: 1.25rem; }
 .inter-dot { width: 7px; height: 7px; background: var(--success); border-radius: 50%; }
 
-/* Resumen mensual panel */
 .panel-monthly { background: white; border: 1px solid var(--success-bd); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
 .panel-monthly-title { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--success); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
 .panel-monthly-title::before { content: ''; display: inline-block; width: 3px; height: 11px; background: var(--success); border-radius: 2px; }
@@ -238,14 +214,12 @@ tr.agrup-spacer td { height: 6px; background: var(--silver); padding: 0; border:
 .sec-label.green { color: var(--success); }
 .section-divider { border: none; border-top: 1px solid var(--success-bd); margin: 1.25rem 0; }
 
-/* Month tabs */
 .month-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
 .month-tab { padding: 5px 13px; border: 1px solid var(--success-bd); border-radius: 99px; font-size: 12px; font-weight: 500; color: var(--success); background: var(--white); cursor: pointer; transition: all 0.15s; font-family: 'Source Sans 3', sans-serif; }
 .month-tab:hover { background: var(--success); color: white; border-color: var(--success); }
 .month-tab.mt-sel { background: var(--success); border-color: var(--success); color: white; }
 .month-tab.mt-data { font-weight: 700; }
 
-/* Sat grid */
 .sat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 8px; margin-bottom: 1.25rem; }
 .sat-card { border: 1px solid var(--success-bd); border-radius: var(--radius); padding: 10px 12px; cursor: pointer; transition: all 0.15s; background: var(--white); }
 .sat-card:hover { border-color: var(--success); box-shadow: var(--shadow-sm); }
@@ -255,7 +229,6 @@ tr.agrup-spacer td { height: 6px; background: var(--silver); padding: 0; border:
 .sc-month { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 .sc-prev { font-size: 11px; color: var(--success); font-weight: 600; margin-top: 4px; }
 
-/* Num input */
 .num-field label { display: block; font-size: 11px; font-weight: 600; color: var(--success); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
 .num-row { display: flex; gap: 8px; align-items: center; }
 .num-btn { width: 38px; height: 44px; border: 1px solid var(--success-bd); border-radius: var(--radius); background: var(--success-bg); color: var(--success); font-size: 20px; cursor: pointer; transition: all 0.1s; font-family: 'Source Sans 3', sans-serif; }
@@ -265,7 +238,6 @@ tr.agrup-spacer td { height: 6px; background: var(--silver); padding: 0; border:
 .num-row input[type="number"] { flex: 1; height: 44px; font-size: 1.5rem; font-family: 'Playfair Display', serif; font-weight: 600; text-align: center; border-color: var(--success-bd); }
 .num-row input[type="number"]:focus { border-color: var(--success); box-shadow: 0 0 0 3px rgba(27,122,74,0.12); }
 
-/* Buttons */
 .btn-row { display: flex; gap: 10px; margin-top: 1.25rem; }
 .btn { padding: 10px 20px; border-radius: var(--radius); border: none; font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 7px; }
 .btn-primary { background: var(--blue); color: white; }
@@ -279,7 +251,6 @@ tr.agrup-spacer td { height: 6px; background: var(--silver); padding: 0; border:
 .btn-lg { padding: 12px 28px; font-size: 14px; }
 .btn-spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
 
-/* Toast */
 .toast { display: none; align-items: center; gap: 10px; padding: 12px 16px; border-radius: var(--radius); margin-top: 1rem; font-size: 13px; font-weight: 500; }
 .toast-ok  { background: var(--success-bg); border: 1px solid var(--success-bd); color: var(--success); }
 .toast-err { background: var(--danger-bg); border: 1px solid #fecaca; color: var(--danger); }
@@ -287,100 +258,65 @@ tr.agrup-spacer td { height: 6px; background: var(--silver); padding: 0; border:
 .empty-msg { text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 13px; }
 #step2 { display: none; }
 
-/* Modal flotante */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(13,27,42,0.55);
-  z-index: 500;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(13,27,42,0.55); z-index: 500; align-items: center; justify-content: center; padding: 1.5rem; }
 .modal-overlay.open { display: flex; }
-.modal-box {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 8px 40px rgba(13,27,42,0.25);
-  width: 100%;
-  max-width: 620px;
-  max-height: 88vh;
-  overflow-y: auto;
-  position: relative;
-  animation: modalIn 0.18s ease;
-}
+.modal-box { background: var(--white); border-radius: var(--radius-lg); box-shadow: 0 8px 40px rgba(13,27,42,0.25); width: 100%; max-width: 620px; max-height: 88vh; overflow-y: auto; position: relative; animation: modalIn 0.18s ease; }
 @keyframes modalIn { from { opacity:0; transform: translateY(-12px) scale(0.98); } to { opacity:1; transform: none; } }
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem 1.5rem 1rem;
-  border-bottom: 1px solid var(--success-bd);
-  background: var(--success-bg);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem 1rem; border-bottom: 1px solid var(--success-bd); background: var(--success-bg); border-radius: var(--radius-lg) var(--radius-lg) 0 0; position: sticky; top: 0; z-index: 1; }
 .modal-header-left { display: flex; align-items: center; gap: 10px; }
-.modal-close {
-  width: 30px; height: 30px;
-  border: 1px solid var(--success-bd);
-  border-radius: 50%;
-  background: white;
-  color: var(--success);
-  font-size: 16px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
-  flex-shrink: 0;
-  line-height: 1;
-}
+.modal-close { width: 30px; height: 30px; border: 1px solid var(--success-bd); border-radius: 50%; background: white; color: var(--success); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0; line-height: 1; }
 .modal-close:hover { background: var(--success); color: white; border-color: var(--success); }
 .modal-body { padding: 1.5rem; }
 
-/* Tabs paso 1 */
 .mode-tabs { display: flex; gap: 0; margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
 .mode-tab { flex: 1; padding: 9px 14px; background: var(--silver); border: none; font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all 0.15s; text-align: center; }
 .mode-tab:first-child { border-right: 1px solid var(--border); }
 .mode-tab.mt-active { background: var(--white); color: var(--navy); font-weight: 600; }
 .mode-tab:hover:not(.mt-active) { background: var(--blue-pale); color: var(--blue); }
 
-/* Panel preview distrito */
+/* ── Vista Distrito ── */
 .distrito-preview { margin-top: 1.25rem; border-top: 1px solid var(--border); padding-top: 1.25rem; }
 .distrito-preview-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 1rem; }
 .distrito-preview-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); }
 .distrito-preview-sub { font-size: 12px; color: var(--text-muted); }
 
-/* KPIs distrito — misma estructura que grupo pero más compacta */
-.distrito-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin-bottom: 1rem; }
-.distrito-kpis .total-box { padding: 0.75rem 1rem; }
+/* ── CAMBIO 2: layout 50/50 KPIs | Gráfico ── */
+.distrito-top-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: stretch;
+}
+
+/* KPIs distrito — 2×2 rellena el lado izquierdo */
+.distrito-kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; align-content: stretch; }
+.distrito-kpis .total-box { padding: 0.85rem 1rem; }
 .distrito-kpis .tb-val { font-size: 1.25rem; }
 
-/* Gráfico iglesias — vertical (reutiliza clases .chart-col del panel principal) */
-.iglesias-chart { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1rem 0.75rem; margin-bottom: 1rem; }
-.iglesias-chart-title { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; }
+/* Gráfico — lado derecho, altura completa */
+.iglesias-chart { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1rem 0.75rem; display: flex; flex-direction: column; }
+.iglesias-chart-title { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
 .igl-legend { display: flex; gap: 10px; }
 .igl-legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--text-muted); }
 .igl-legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
 .igl-legend-dot.ild-consol { background: #60a5fa; }
 .igl-legend-dot.ild-pend   { background: #6ee7b7; }
+/* Las barras del gráfico de iglesias ocupan el espacio disponible */
+.iglesias-chart .chart-cols { flex: 1; min-height: 110px; }
+.iglesias-chart .chart-baseline { margin: 0 -1rem; }
 
-/* Tabla distrito preview */
-.distrito-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border); border-radius: var(--radius-lg); margin-top: 0; }
+.distrito-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border); border-radius: var(--radius-lg); }
 
 @media (max-width: 700px) {
+  .distrito-top-layout { grid-template-columns: 1fr; }
   .distrito-kpis { grid-template-columns: repeat(2, 1fr); }
 }
-
-/* Tablet */
 @media (max-width: 860px) {
   .months-summary { grid-template-columns: repeat(6, 1fr); }
   .agrup-months-grid { grid-template-columns: repeat(6, 1fr); }
   .pm-grid { grid-template-columns: repeat(4, 1fr); }
 }
-/* Móvil */
 @media (max-width: 600px) {
   .container { padding: 1.25rem 1rem 3rem; }
   .topbar { padding: 0 1rem; }
@@ -432,37 +368,26 @@ tr.agrup-spacer td { height: 6px; background: var(--silver); padding: 0; border:
           <span>Cargando datos desde Google Sheets...</span>
         </div>
         <div id="formStep1" style="display:none;">
-
-          <!-- Tabs -->
           <div class="mode-tabs">
             <button class="mode-tab mt-active" id="tabGrupo"    onclick="switchTab('grupo')">Por grupo</button>
             <button class="mode-tab"           id="tabDistrito" onclick="switchTab('distrito')">Por distrito</button>
           </div>
-
-          <!-- Panel grupo -->
           <div id="panelGrupo">
             <div class="field">
               <label>Grupo</label>
-              <select id="selGrupo">
-                <option value="">— Selecciona un grupo —</option>
-              </select>
+              <select id="selGrupo"><option value="">— Selecciona un grupo —</option></select>
             </div>
             <div class="btn-row">
               <button class="btn btn-primary btn-lg" id="btnVerSubgrupos" disabled onclick="irPaso2()">Ver iglesias →</button>
             </div>
           </div>
-
-          <!-- Panel distrito -->
           <div id="panelDistrito" style="display:none;">
             <div class="field">
               <label>Distrito</label>
-              <select id="selDistrito" onchange="onDistritoChange()">
-                <option value="">— Selecciona un distrito —</option>
-              </select>
+              <select id="selDistrito" onchange="onDistritoChange()"><option value="">— Selecciona un distrito —</option></select>
             </div>
             <div id="distritoPreview" class="distrito-preview" style="display:none;"></div>
           </div>
-
         </div>
       </div>
     </div>
@@ -503,8 +428,7 @@ tr.agrup-spacer td { height: 6px; background: var(--silver); padding: 0; border:
           <table id="subgruposTable">
             <thead>
               <tr>
-                <th>Iglesia</th>
-                <th>Responsable</th>
+                <th>Iglesia</th><th>Responsable</th>
                 <th class="th-c">Bautismos (consolidado)</th>
                 <th class="th-c">% del blanco</th>
                 <th class="th-i">Bautismos (Pendientes)</th>
@@ -521,10 +445,9 @@ tr.agrup-spacer td { height: 6px; background: var(--silver); padding: 0; border:
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- Modal flotante de registro -->
+  <!-- Modal -->
   <div class="modal-overlay" id="regPanel" onclick="handleOverlayClick(event)">
     <div class="modal-box" id="modalBox">
       <div class="modal-header">
@@ -567,7 +490,7 @@ tr.agrup-spacer td { height: 6px; background: var(--silver); padding: 0; border:
             <span id="btnGuardarTxt">Guardar bautismos pendientes</span>
           </button>
         </div>
-        <div class="toast toast-ok" id="toastOk">✓ &nbsp;<span id="toastOkMsg">Registro guardado.</span></div>
+        <div class="toast toast-ok"  id="toastOk">✓ &nbsp;<span id="toastOkMsg">Registro guardado.</span></div>
         <div class="toast toast-err" id="toastErr">✕ &nbsp;<span id="toastErrMsg">Error al guardar.</span></div>
       </div>
     </div>
@@ -579,15 +502,9 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzca5dIEMy3XqDn
 const MESES      = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 const MESES_FULL = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
-let todosGrupos   = [];
-let gruposMap     = {};  // { "01. La Paz": [...iglesias] }
-let agrupMap      = {};  // { "01. La Paz": { "Agrup A": [...], ... } }
-let grupoSelKey   = null;
-let iglesiaActual = null;
-let iglesiaIdx    = null;
-let sabadoSel     = null;
-let mesFiltro     = new Date().getMonth();
-let todosSabados  = [];
+let todosGrupos = [], gruposMap = {}, agrupMap = {};
+let grupoSelKey = null, iglesiaActual = null, iglesiaIdx = null;
+let sabadoSel = null, mesFiltro = new Date().getMonth(), todosSabados = [];
 
 document.getElementById("topbarYear").textContent = "Año " + new Date().getFullYear();
 
@@ -599,11 +516,10 @@ function generarSabadosAnio() {
   return sabs;
 }
 
-// ── Cargar grupos ──
 async function cargarGrupos() {
   todosSabados = generarSabadosAnio();
   try {
-    const res = await fetch(APPS_SCRIPT_URL + "?action=getGrupos", { method:"GET", redirect:"follow", credentials:"omit" });
+    const res  = await fetch(APPS_SCRIPT_URL + "?action=getGrupos", { method:"GET", redirect:"follow", credentials:"omit" });
     const json = await res.json();
     if (!json.data) throw new Error(json.error || "Sin datos");
     procesarGrupos(json.data);
@@ -612,10 +528,8 @@ async function cargarGrupos() {
 
 function cargarJsonp() {
   window._cb = function(json) {
-    try {
-      if (!json.data) throw new Error(json.error || "Sin datos");
-      procesarGrupos(json.data);
-    } catch(e) { mostrarErrorCarga(e.message); }
+    try { if (!json.data) throw new Error(json.error || "Sin datos"); procesarGrupos(json.data); }
+    catch(e) { mostrarErrorCarga(e.message); }
   };
   const s = document.createElement("script");
   s.src = APPS_SCRIPT_URL + "?action=getGrupos&callback=_cb";
@@ -624,69 +538,52 @@ function cargarJsonp() {
 }
 
 function procesarGrupos(data) {
-  todosGrupos = data;
-  gruposMap = {};
-  agrupMap  = {};
-
+  todosGrupos = data; gruposMap = {}; agrupMap = {};
   data.forEach(g => {
-    const grupo = String(g.grupo      || "Sin grupo").trim();
+    const grupo = String(g.grupo || "Sin grupo").trim();
     const agrup = String(g.agrupacion || "Sin agrupación").trim();
-
     if (!gruposMap[grupo]) gruposMap[grupo] = [];
     gruposMap[grupo].push(g);
-
     if (!agrupMap[grupo]) agrupMap[grupo] = {};
     if (!agrupMap[grupo][agrup]) agrupMap[grupo][agrup] = [];
     agrupMap[grupo][agrup].push(g);
   });
-
-  // Poblar selector grupo
   const sel = document.getElementById("selGrupo");
   Object.keys(gruposMap).sort().forEach(key => {
-    const opt = document.createElement("option");
-    opt.value = key;
+    const opt = document.createElement("option"); opt.value = key;
     const n = gruposMap[key].length;
     opt.textContent = key + "  (" + n + " iglesia" + (n > 1 ? "s" : "") + ")";
     sel.appendChild(opt);
   });
-
-  // Poblar selector distrito (todas las agrupaciones de todos los grupos)
   const selD = document.getElementById("selDistrito");
-  const agrupSet = new Map(); // agrupNombre → iglesias[]
+  const agrupSet = new Map();
   data.forEach(g => {
     const agrup = String(g.agrupacion || "Sin agrupación").trim();
     if (!agrupSet.has(agrup)) agrupSet.set(agrup, []);
     agrupSet.get(agrup).push(g);
   });
-  // Ordenar y añadir
   Array.from(agrupSet.keys()).sort().forEach(nombre => {
-    const opt = document.createElement("option");
-    opt.value = nombre;
+    const opt = document.createElement("option"); opt.value = nombre;
     const n = agrupSet.get(nombre).length;
     opt.textContent = nombre + "  (" + n + " iglesia" + (n > 1 ? "s" : "") + ")";
     selD.appendChild(opt);
   });
   window._agrupSet = agrupSet;
-
   document.getElementById("loadingState").style.display = "none";
-  document.getElementById("formStep1").style.display = "block";
+  document.getElementById("formStep1").style.display    = "block";
 }
 
-// ── Tabs ──
 function switchTab(modo) {
   const esGrupo = modo === "grupo";
-  document.getElementById("tabGrupo").classList.toggle("mt-active",  esGrupo);
+  document.getElementById("tabGrupo").classList.toggle("mt-active", esGrupo);
   document.getElementById("tabDistrito").classList.toggle("mt-active", !esGrupo);
   document.getElementById("panelGrupo").style.display    = esGrupo  ? "block" : "none";
   document.getElementById("panelDistrito").style.display = !esGrupo ? "block" : "none";
-  if (esGrupo) {
-    document.getElementById("distritoPreview").style.display = "none";
-  }
+  if (esGrupo) document.getElementById("distritoPreview").style.display = "none";
 }
 
-// ── Distrito preview ──
 function onDistritoChange() {
-  const nombre = document.getElementById("selDistrito").value;
+  const nombre  = document.getElementById("selDistrito").value;
   const preview = document.getElementById("distritoPreview");
   if (!nombre) { preview.style.display = "none"; return; }
   preview.style.display = "block";
@@ -701,17 +598,14 @@ function renderDistritoPreview(agrupNombre) {
   const pctC     = blanco > 0 ? Math.round((consol / blanco) * 100) : 0;
   const pctP     = blanco > 0 ? Math.round((pend   / blanco) * 100) : 0;
 
-  // ── Gráfico vertical apilado por iglesia ──
-  const BAR_MAX_PX = 110;
+  const BAR_MAX_PX = 120;
   const maxTotal   = Math.max(...iglesias.map(g => (parseInt(g.total)||0) + calcularInteresados(g)), 1);
 
   const colsHtml = iglesias.map(g => {
-    const c      = parseInt(g.total) || 0;
-    const p      = calcularInteresados(g);
-    const total  = c + p;
-    const pctGC  = blanco > 0 ? Math.round((c / blanco) * 100) : 0;
-    const pctGP  = blanco > 0 ? Math.round((p / blanco) * 100) : 0;
-    const totalH = total === 0 ? 0 : Math.max(Math.round((total / maxTotal) * BAR_MAX_PX), 6);
+    const c = parseInt(g.total) || 0, p = calcularInteresados(g), total = c + p;
+    const pctGC = blanco > 0 ? Math.round((c / blanco) * 100) : 0;
+    const pctGP = blanco > 0 ? Math.round((p / blanco) * 100) : 0;
+    const totalH  = total === 0 ? 0 : Math.max(Math.round((total / maxTotal) * BAR_MAX_PX), 6);
     const consolH = total > 0 ? Math.round((c / total) * totalH) : 0;
     const pendH   = totalH - consolH;
     const zero    = total === 0;
@@ -722,50 +616,33 @@ function renderDistritoPreview(agrupNombre) {
     return `<div class="chart-col">
       <div class="chart-col-val">${valHtml}</div>
       <div class="chart-col-bar-wrap" style="height:${BAR_MAX_PX}px;">
-        ${zero
-          ? `<div class="chart-col-seg-zero"></div>`
-          : `<div class="chart-col-seg-pend"   style="height:${pendH}px;"></div>
-             <div class="chart-col-seg-consol" style="height:${consolH}px;"></div>`}
+        ${zero ? `<div class="chart-col-seg-zero"></div>`
+               : `<div class="chart-col-seg-pend" style="height:${pendH}px;"></div>
+                  <div class="chart-col-seg-consol" style="height:${consolH}px;"></div>`}
       </div>
     </div>`;
   }).join("");
 
   const labelsHtml = iglesias.map(g => {
-    const raw   = g.iglesia || "—";
-    const label = raw.length > 12 ? raw.slice(0, 11) + "…" : raw;
+    const raw = g.iglesia || "—", label = raw.length > 12 ? raw.slice(0,11)+"…" : raw;
     return `<div class="chart-col-label" title="${raw}">${label}</div>`;
   }).join("");
 
-  // ── Filas de tabla por iglesia ──
   const tbodyRows = iglesias.map(g => {
-    const key   = encodeKey(g.grupo, g.iglesia);
-    const c     = parseInt(g.total) || 0;
-    const p     = calcularInteresados(g);
-    const pct   = blanco > 0 ? Math.round((c / blanco) * 100) : 0;
-    const fill  = Math.min(pct, 100);
+    const key  = encodeKey(g.grupo, g.iglesia);
+    const c    = parseInt(g.total) || 0, p = calcularInteresados(g);
+    const pct  = blanco > 0 ? Math.round((c / blanco) * 100) : 0;
+    const fill = Math.min(pct, 100);
     const pctIg = blanco > 0 ? Math.round(((c + p) / blanco) * 100) + "%" : "—";
     return `<tr class="iglesia-row" data-key="${key}">
-      <td class="td-iglesia">${g.iglesia || "—"}</td>
-      <td class="td-resp">${g.responsable || "—"}</td>
-      <td class="td-consol">
-        <div class="mini-bar-wrap">
-          <div class="mini-bar"><div class="mini-bar-fill" style="width:${fill}%"></div></div>
-          <span>${c}</span>
-        </div>
-      </td>
-      <td class="td-consol" style="text-align:center;">
-        <span class="badge ${pct >= 100 ? "badge-green" : pct >= 50 ? "badge-blue" : "badge-warn"}">${pct}%</span>
-      </td>
-      <td class="td-inter">${p > 0 ? p : '<span style="color:#7a8fa3;font-weight:400;">—</span>'}</td>
-      <td style="text-align:center;">
-        <button class="btn-expand" id="expand-dp-${key}">▸ Ver meses</button>
-      </td>
-      <td style="text-align:center;">
-        <span class="badge ${pct >= 100 ? "badge-green" : "badge-blue"}">${pctIg}</span>
-      </td>
-      <td style="text-align:right;">
-        <button class="btn-registrar" data-rkey="${key}">Registrar</button>
-      </td>
+      <td class="td-iglesia">${g.iglesia||"—"}</td>
+      <td class="td-resp">${g.responsable||"—"}</td>
+      <td class="td-consol"><div class="mini-bar-wrap"><div class="mini-bar"><div class="mini-bar-fill" style="width:${fill}%"></div></div><span>${c}</span></div></td>
+      <td class="td-consol" style="text-align:center;"><span class="badge ${pct>=100?"badge-green":pct>=50?"badge-blue":"badge-warn"}">${pct}%</span></td>
+      <td class="td-inter">${p>0?p:'<span style="color:#7a8fa3;font-weight:400;">—</span>'}</td>
+      <td style="text-align:center;"><button class="btn-expand" id="expand-dp-${key}">▸ Ver meses</button></td>
+      <td style="text-align:center;"><span class="badge ${pct>=100?"badge-green":"badge-blue"}">${pctIg}</span></td>
+      <td style="text-align:right;"><button class="btn-registrar" data-rkey="${key}">Registrar</button></td>
     </tr>
     <tr class="expand-row hidden" data-expand-key="${key}">
       <td colspan="8"><div class="expand-inner" id="expand-inner-dp-${key}"></div></td>
@@ -776,57 +653,68 @@ function renderDistritoPreview(agrupNombre) {
   preview.innerHTML = `
     <div class="distrito-preview-header">
       <div class="distrito-preview-title">${agrupNombre}</div>
-      <div class="distrito-preview-sub">${iglesias.length} iglesia${iglesias.length !== 1 ? "s" : ""}</div>
+      <div class="distrito-preview-sub">${iglesias.length} iglesia${iglesias.length!==1?"s":""}</div>
     </div>
 
-    <div class="distrito-kpis">
-      <div class="total-box tb-neutral"><div class="tb-label">Iglesias</div><div class="tb-val">${iglesias.length}</div><div class="tb-note">en este distrito</div></div>
-      <div class="total-box tb-orange"><div class="tb-label">Blanco anual</div><div class="tb-val">${blanco}</div><div class="tb-note">Meta del distrito</div></div>
-      <div class="total-box tb-blue"><div class="tb-label">Consolidados</div><div class="tb-val">${consol}</div><div class="tb-note">${pctC}% del blanco</div></div>
-      <div class="total-box tb-green"><div class="tb-label">Pendientes</div><div class="tb-val">${pend}</div><div class="tb-note">${pctP}% del blanco</div></div>
-    </div>
-
-    <div class="iglesias-chart">
-      <div class="iglesias-chart-title">
-        <span>Bautismos por iglesia</span>
-        <div class="igl-legend">
-          <div class="igl-legend-item"><div class="igl-legend-dot ild-consol"></div>Consolidados</div>
-          <div class="igl-legend-item"><div class="igl-legend-dot ild-pend"></div>Pendientes</div>
+    <!-- ── CAMBIO 2+3: layout 50/50 ── -->
+    <div class="distrito-top-layout">
+      <div class="distrito-kpis">
+        <div class="total-box tb-neutral">
+          <div class="tb-label">Iglesias</div>
+          <div class="tb-val">${iglesias.length}</div>
+          <div class="tb-note">en este distrito</div>
+        </div>
+        <div class="total-box tb-orange">
+          <div class="tb-label">Blanco anual</div>
+          <div class="tb-val">${blanco}</div>
+          <div class="tb-note">Meta del distrito</div>
+        </div>
+        <div class="total-box tb-blue">
+          <div class="tb-label">Consolidados</div>
+          <div class="tb-val">${consol}</div>
+          <div class="tb-note">${pctC}% del blanco</div>
+        </div>
+        <div class="total-box tb-green">
+          <div class="tb-label">Pendientes</div>
+          <div class="tb-val">${pend}</div>
+          <div class="tb-note">${pctP}% del blanco</div>
         </div>
       </div>
-      <div class="chart-cols" style="min-height:120px;">${colsHtml}</div>
-      <div class="chart-baseline"></div>
-      <div class="chart-labels">${labelsHtml}</div>
+
+      <div class="iglesias-chart">
+        <div class="iglesias-chart-title">
+          <span>Bautismos por iglesia</span>
+          <div class="igl-legend">
+            <div class="igl-legend-item"><div class="igl-legend-dot ild-consol"></div>Consolidados</div>
+            <div class="igl-legend-item"><div class="igl-legend-dot ild-pend"></div>Pendientes</div>
+          </div>
+        </div>
+        <div class="chart-cols" style="min-height:110px;">${colsHtml}</div>
+        <div class="chart-baseline"></div>
+        <div class="chart-labels">${labelsHtml}</div>
+      </div>
     </div>
 
     <div class="distrito-table-wrap">
       <table style="width:100%;min-width:900px;border-collapse:collapse;font-size:13px;">
-        <thead>
-          <tr style="background:var(--navy);">
-            <th style="padding:8px 10px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.65);white-space:nowrap;">Iglesia</th>
-            <th style="padding:8px 10px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.65);white-space:nowrap;">Responsable</th>
-            <th style="padding:8px 10px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#93c5fd;white-space:nowrap;">Bautismos (consolidado)</th>
-            <th style="padding:8px 10px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#93c5fd;white-space:nowrap;">% del blanco</th>
-            <th style="padding:8px 10px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6ee7b7;white-space:nowrap;">Bautismos (Pendientes)</th>
-            <th style="padding:8px 10px;text-align:center;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6ee7b7;white-space:nowrap;">Por mes</th>
-            <th style="padding:8px 10px;text-align:center;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6ee7b7;white-space:nowrap;">% Proyección</th>
-            <th></th>
-          </tr>
-        </thead>
+        <thead><tr style="background:var(--navy);">
+          <th style="padding:8px 10px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.65);white-space:nowrap;">Iglesia</th>
+          <th style="padding:8px 10px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.65);white-space:nowrap;">Responsable</th>
+          <th style="padding:8px 10px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#93c5fd;white-space:nowrap;">Bautismos (consolidado)</th>
+          <th style="padding:8px 10px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#93c5fd;white-space:nowrap;">% del blanco</th>
+          <th style="padding:8px 10px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6ee7b7;white-space:nowrap;">Bautismos (Pendientes)</th>
+          <th style="padding:8px 10px;text-align:center;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6ee7b7;white-space:nowrap;">Por mes</th>
+          <th style="padding:8px 10px;text-align:center;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6ee7b7;white-space:nowrap;">% Proyección</th>
+          <th></th>
+        </tr></thead>
         <tbody id="distritoPvTbody">${tbodyRows}</tbody>
       </table>
     </div>`;
 
-  // Extender lookup global para que abrirPanel funcione
   iglesias.forEach(g => {
     const key = encodeKey(g.grupo, g.iglesia);
     if (!window._iglesiaLookup) window._iglesiaLookup = {};
     window._iglesiaLookup[key] = g;
-  });
-
-  // Adjuntar eventos a las filas generadas
-  iglesias.forEach(g => {
-    const key = encodeKey(g.grupo, g.iglesia);
     const btnExp = document.getElementById("expand-dp-" + key);
     const btnReg = preview.querySelector(`[data-rkey="${key}"]`);
     if (btnExp) btnExp.addEventListener("click", e => { e.stopPropagation(); toggleExpandDP(key); });
@@ -834,34 +722,25 @@ function renderDistritoPreview(agrupNombre) {
   });
 }
 
-// Expandir meses en vista distrito preview
 function toggleExpandDP(key) {
   const trExp = document.querySelector(`.expand-row[data-expand-key="${key}"]`);
   const btn   = document.getElementById("expand-dp-" + key);
   if (!trExp || !btn) return;
   if (trExp.classList.contains("hidden")) {
-    // Reusar renderExpandMonths cambiando el contenedor id
     const container = document.getElementById("expand-inner-dp-" + key);
     const g = window._iglesiaLookup?.[key];
     if (container && g) {
-      const mesActual = new Date().getMonth();
-      const totalInter = calcularInteresados(g);
-      const porMes = Array(12).fill(0);
-      if (g.sabados) Object.entries(g.sabados).forEach(([f, v]) => { porMes[new Date(f).getMonth()] += parseInt(v)||0; });
-      const cells = MESES.map((m, i) => {
-        const val = porMes[i];
-        const cls = i === mesActual ? "ms-current" : val > 0 ? "ms-active" : "";
-        return `<div class="ms-cell ${cls}"><div class="ms-name">${m}</div><div class="ms-val">${val > 0 ? val : "·"}</div></div>`;
+      const mesActual = new Date().getMonth(), totalInter = calcularInteresados(g), porMes = Array(12).fill(0);
+      if (g.sabados) Object.entries(g.sabados).forEach(([f,v]) => { porMes[new Date(f).getMonth()] += parseInt(v)||0; });
+      const cells = MESES.map((m,i) => {
+        const val = porMes[i], cls = i===mesActual?"ms-current":val>0?"ms-active":"";
+        return `<div class="ms-cell ${cls}"><div class="ms-name">${m}</div><div class="ms-val">${val>0?val:"·"}</div></div>`;
       }).join("");
       container.innerHTML = `<div class="expand-title">Bautismos pendientes por mes · ${g.iglesia} <span style="font-weight:400;color:var(--text-muted);font-size:11px;">Total: ${totalInter}</span></div><div class="months-summary">${cells}</div>`;
     }
-    trExp.classList.remove("hidden");
-    btn.textContent = "▾ Ocultar";
-    btn.classList.add("expanded");
+    trExp.classList.remove("hidden"); btn.textContent = "▾ Ocultar"; btn.classList.add("expanded");
   } else {
-    trExp.classList.add("hidden");
-    btn.textContent = "▸ Ver meses";
-    btn.classList.remove("expanded");
+    trExp.classList.add("hidden"); btn.textContent = "▸ Ver meses"; btn.classList.remove("expanded");
   }
 }
 
@@ -876,7 +755,6 @@ document.getElementById("selGrupo").addEventListener("change", function() {
   document.getElementById("btnVerSubgrupos").disabled = this.value === "";
 });
 
-// ── Paso 2 ──
 function irPaso2() {
   grupoSelKey = document.getElementById("selGrupo").value;
   if (!grupoSelKey) return;
@@ -889,454 +767,276 @@ function irPaso2() {
   document.getElementById("step2Title").textContent   = grupoSelKey;
   document.getElementById("breadcrumb").innerHTML =
     `<span class="bc-link" onclick="irPaso1()">Inicio</span> <span>›</span> <span class="bc-active">${grupoSelKey}</span>`;
-  renderTotales();
-  renderTabla();
+  renderTotales(); renderTabla();
 }
 
 function calcularInteresados(g) {
   if (!g.sabados) return 0;
-  return Object.values(g.sabados).reduce((s, v) => s + (parseInt(v) || 0), 0);
+  return Object.values(g.sabados).reduce((s,v) => s + (parseInt(v)||0), 0);
 }
 
 function renderTotales() {
-  const iglesias   = gruposMap[grupoSelKey] || [];
-  const totalBaut  = iglesias.reduce((s, g) => s + (parseInt(g.total) || 0), 0);
-  const totalInter = iglesias.reduce((s, g) => s + calcularInteresados(g), 0);
-  const nAgrup     = Object.keys(agrupMap[grupoSelKey] || {}).length;
-  // Blanco anual: suma de blancoAnual de todas las iglesias (o el primer valor por agrupación si es por distrito)
-  const totalBlanco = iglesias.reduce((s, g) => s + (parseInt(g.blancoAnual) || 0), 0);
+  const iglesias    = gruposMap[grupoSelKey] || [];
+  const totalBaut   = iglesias.reduce((s,g) => s + (parseInt(g.total)||0), 0);
+  const totalInter  = iglesias.reduce((s,g) => s + calcularInteresados(g), 0);
+  const nAgrup      = Object.keys(agrupMap[grupoSelKey] || {}).length;
+  const totalBlanco = iglesias.reduce((s,g) => s + (parseInt(g.blancoAnual)||0), 0);
+
+  // ── CAMBIO 1: % consolidados vs blanco del grupo ──
+  const pctConsol = totalBlanco > 0 ? Math.round((totalBaut / totalBlanco) * 100) : 0;
+
   document.getElementById("groupTotals").innerHTML = `
     <div class="total-box tb-neutral"><div class="tb-label">Agrupaciones</div><div class="tb-val">${nAgrup}</div><div class="tb-note">${iglesias.length} iglesias en total</div></div>
     <div class="total-box tb-orange"><div class="tb-label">Blanco del grupo</div><div class="tb-val">${totalBlanco}</div><div class="tb-note">Meta anual del grupo</div></div>
-    <div class="total-box tb-blue"><div class="tb-label">Bautismos consolidados</div><div class="tb-val">${totalBaut}</div><div class="tb-note">Datos oficiales del ACMS</div></div>
+    <div class="total-box tb-blue"><div class="tb-label">Bautismos consolidados</div><div class="tb-val">${totalBaut}</div><div class="tb-note">${pctConsol}% del blanco</div></div>
     <div class="total-box tb-green"><div class="tb-label">Bautismos (Pendientes)</div><div class="tb-val">${totalInter}</div><div class="tb-note">Registrados en este sistema</div></div>`;
   renderChart();
 }
 
 function renderChart() {
-  const cols   = document.getElementById("chartCols");
-  const labels = document.getElementById("chartLabels");
+  const cols = document.getElementById("chartCols"), labels = document.getElementById("chartLabels");
   if (!cols || !labels) return;
-
   const agrupaciones = agrupMap[grupoSelKey] || {};
   const datos = Object.entries(agrupaciones).map(([nombre, iglesias]) => {
-    const blanco  = parseInt(iglesias[0]?.blancoAnual) || 0;
-    const consol  = iglesias.reduce((s, g) => s + (parseInt(g.total) || 0), 0);
-    const pend    = iglesias.reduce((s, g) => s + calcularInteresados(g), 0);
-    const pctC    = blanco > 0 ? Math.round((consol / blanco) * 100) : 0;
-    const pctP    = blanco > 0 ? Math.round((pend   / blanco) * 100) : 0;
-    return { nombre, consol, pend, pctC, pctP, total: consol + pend };
-  }).sort((a, b) => b.total - a.total);
+    const blanco = parseInt(iglesias[0]?.blancoAnual)||0;
+    const consol = iglesias.reduce((s,g) => s+(parseInt(g.total)||0), 0);
+    const pend   = iglesias.reduce((s,g) => s+calcularInteresados(g), 0);
+    const pctC   = blanco>0 ? Math.round((consol/blanco)*100) : 0;
+    const pctP   = blanco>0 ? Math.round((pend/blanco)*100)   : 0;
+    return { nombre, consol, pend, pctC, pctP, total: consol+pend };
+  }).sort((a,b) => b.total-a.total);
 
-  if (!datos.length) {
-    cols.innerHTML = '<div class="chart-empty">Sin agrupaciones</div>';
-    labels.innerHTML = "";
-    return;
-  }
-
-  const BAR_MAX_PX = 110;
-  const maxTotal = Math.max(...datos.map(d => d.total), 1);
-
+  if (!datos.length) { cols.innerHTML='<div class="chart-empty">Sin agrupaciones</div>'; labels.innerHTML=""; return; }
+  const BAR_MAX_PX = 110, maxTotal = Math.max(...datos.map(d=>d.total),1);
   cols.innerHTML = datos.map(d => {
-    const totalH  = d.total === 0 ? 0 : Math.max(Math.round((d.total / maxTotal) * BAR_MAX_PX), 6);
-    // Repartir altura proporcionalmente entre consol y pend
-    const consolH = d.total > 0 ? Math.round((d.consol / d.total) * totalH) : 0;
-    const pendH   = totalH - consolH;
-    const zero    = d.total === 0;
-
-    const valHtml = zero
-      ? `<div class="chart-col-val-zero">·</div>`
+    const totalH  = d.total===0 ? 0 : Math.max(Math.round((d.total/maxTotal)*BAR_MAX_PX),6);
+    const consolH = d.total>0 ? Math.round((d.consol/d.total)*totalH) : 0;
+    const pendH   = totalH-consolH, zero = d.total===0;
+    const valHtml = zero ? `<div class="chart-col-val-zero">·</div>`
       : `<div class="chart-col-val-pend">${d.pend} – <span style="opacity:.7;font-weight:500">${d.pctP}%</span></div>
          <div class="chart-col-val-consol">${d.consol} – <span style="opacity:.7;font-weight:500">${d.pctC}%</span></div>`;
-
-    return `<div class="chart-col">
-      <div class="chart-col-val">${valHtml}</div>
+    return `<div class="chart-col"><div class="chart-col-val">${valHtml}</div>
       <div class="chart-col-bar-wrap" style="height:${BAR_MAX_PX}px;">
-        ${zero
-          ? `<div class="chart-col-seg-zero"></div>`
-          : `<div class="chart-col-seg-pend"   style="height:${pendH}px;"></div>
-             <div class="chart-col-seg-consol" style="height:${consolH}px;"></div>`
-        }
-      </div>
-    </div>`;
+        ${zero?`<div class="chart-col-seg-zero"></div>`
+              :`<div class="chart-col-seg-pend" style="height:${pendH}px;"></div>
+                <div class="chart-col-seg-consol" style="height:${consolH}px;"></div>`}
+      </div></div>`;
   }).join("");
-
   labels.innerHTML = datos.map(d => {
-    const short = d.nombre.replace(/^\d+\.\s*/, "");
-    const label = short.length > 14 ? short.slice(0, 13) + "…" : short;
+    const short = d.nombre.replace(/^\d+\.\s*/,""), label = short.length>14?short.slice(0,13)+"…":short;
     return `<div class="chart-col-label" title="${d.nombre}">${label}</div>`;
   }).join("");
 }
 
-function encodeKey(grupo, iglesia) {
-  return (grupo + "||" + iglesia).replace(/['"]/g, "");
-}
+function encodeKey(grupo, iglesia) { return (grupo+"||"+iglesia).replace(/['"]/g,""); }
 
 function renderTabla() {
-  const tbody      = document.getElementById("tablaTbody");
-  tbody.innerHTML  = "";
-  const agrupaciones = agrupMap[grupoSelKey] || {};
-  const agrupKeys    = Object.keys(agrupaciones).sort();
-
-  agrupKeys.forEach((agrupNombre, ai) => {
-    const iglesias    = agrupaciones[agrupNombre];
-    const blancoAgrup   = parseInt(iglesias[0]?.blancoAnual) || 0;
-    const totalAgrup    = iglesias.reduce((s, g) => s + (parseInt(g.total) || 0), 0);
-    const interAgrup    = iglesias.reduce((s, g) => s + calcularInteresados(g), 0);
-    const pctConsol     = blancoAgrup > 0 ? Math.round((totalAgrup / blancoAgrup) * 100) : 0;
-    const pctPend       = blancoAgrup > 0 ? Math.round((interAgrup  / blancoAgrup) * 100) : 0;
-    const pctProyec     = blancoAgrup > 0 ? Math.round(((totalAgrup + interAgrup) / blancoAgrup) * 100) + "%" : "—";
-    // Anchos apilados: la barra total no supera 100% visualmente
-    const fillConsol    = Math.min(pctConsol, 100);
-    const fillPend      = Math.min(pctPend, Math.max(0, 100 - fillConsol));
-
-    if (ai > 0) {
-      const spacer = document.createElement("tr");
-      spacer.className = "agrup-spacer";
-      spacer.innerHTML = `<td colspan="8"></td>`;
-      tbody.appendChild(spacer);
-    }
-
-    // Fila cabecera agrupación — 8 columnas
-    const trAgrup = document.createElement("tr");
-    trAgrup.className = "agrup-row";
-    trAgrup.innerHTML = `
+  const tbody = document.getElementById("tablaTbody"); tbody.innerHTML="";
+  const agrupaciones = agrupMap[grupoSelKey]||{}, agrupKeys = Object.keys(agrupaciones).sort();
+  agrupKeys.forEach((agrupNombre,ai) => {
+    const iglesias = agrupaciones[agrupNombre];
+    const blancoAgrup = parseInt(iglesias[0]?.blancoAnual)||0;
+    const totalAgrup  = iglesias.reduce((s,g)=>s+(parseInt(g.total)||0),0);
+    const interAgrup  = iglesias.reduce((s,g)=>s+calcularInteresados(g),0);
+    const pctConsol   = blancoAgrup>0 ? Math.round((totalAgrup/blancoAgrup)*100) : 0;
+    const pctPend     = blancoAgrup>0 ? Math.round((interAgrup/blancoAgrup)*100) : 0;
+    const pctProyec   = blancoAgrup>0 ? Math.round(((totalAgrup+interAgrup)/blancoAgrup)*100)+"%" : "—";
+    const fillConsol  = Math.min(pctConsol,100), fillPend = Math.min(pctPend,Math.max(0,100-fillConsol));
+    if (ai>0) { const sp=document.createElement("tr"); sp.className="agrup-spacer"; sp.innerHTML=`<td colspan="8"></td>`; tbody.appendChild(sp); }
+    const trA = document.createElement("tr"); trA.className="agrup-row";
+    trA.innerHTML = `
       <td colspan="2">
         <div class="agrup-name">${agrupNombre}</div>
-        <div class="agrup-meta">${iglesias.length} iglesia${iglesias.length > 1 ? "s" : ""}</div>
+        <div class="agrup-meta">${iglesias.length} iglesia${iglesias.length>1?"s":""}</div>
         <div class="agrup-progress">
-          <div class="agrup-track">
-            <div class="agrup-fill-consol" style="width:${fillConsol}%"></div>
-            <div class="agrup-fill-pend"   style="width:${fillPend}%"></div>
-          </div>
-          <div class="agrup-pcts">
-            <span class="agrup-pct-consol" title="Bautismos consolidados vs blanco">${pctConsol}%</span>
-            <span class="agrup-pct-sep">+</span>
-            <span class="agrup-pct-pend"   title="Bautismos pendientes vs blanco">${pctPend}%</span>
-          </div>
+          <div class="agrup-track"><div class="agrup-fill-consol" style="width:${fillConsol}%"></div><div class="agrup-fill-pend" style="width:${fillPend}%"></div></div>
+          <div class="agrup-pcts"><span class="agrup-pct-consol">${pctConsol}%</span><span class="agrup-pct-sep">+</span><span class="agrup-pct-pend">${pctPend}%</span></div>
         </div>
       </td>
-      <td style="text-align:center;vertical-align:middle;">
-        <div class="agrup-blanco-lbl">Bautismos</div>
-        <div class="agrup-blanco-val">${totalAgrup}</div>
-      </td>
-      <td style="text-align:center;vertical-align:middle;">
-        <div class="agrup-blanco-lbl">Blanco anual del Distrito</div>
-        <div class="agrup-blanco-val">${blancoAgrup}</div>
-      </td>
-      <td style="text-align:center;vertical-align:middle;">
-        <div class="agrup-blanco-lbl" style="color:#6ee7b7;">Bautismos (Pendientes)</div>
-        <div class="agrup-blanco-val" style="color:#6ee7b7;">${interAgrup > 0 ? interAgrup : "—"}</div>
-      </td>
-      <td style="text-align:center;vertical-align:middle;">
-        <button class="btn-agrup-expand" id="ae-btn-${ai}" data-ai="${ai}">▸ Ver meses</button>
-      </td>
-      <td style="text-align:center;vertical-align:middle;">
-        <div class="agrup-blanco-lbl" style="color:#fcd34d;">% Proyección</div>
-        <div class="agrup-blanco-val" style="color:#fcd34d;">${pctProyec}</div>
-      </td>
+      <td style="text-align:center;vertical-align:middle;"><div class="agrup-blanco-lbl">Bautismos</div><div class="agrup-blanco-val">${totalAgrup}</div></td>
+      <td style="text-align:center;vertical-align:middle;"><div class="agrup-blanco-lbl">Blanco anual del Distrito</div><div class="agrup-blanco-val">${blancoAgrup}</div></td>
+      <td style="text-align:center;vertical-align:middle;"><div class="agrup-blanco-lbl" style="color:#6ee7b7;">Bautismos (Pendientes)</div><div class="agrup-blanco-val" style="color:#6ee7b7;">${interAgrup>0?interAgrup:"—"}</div></td>
+      <td style="text-align:center;vertical-align:middle;"><button class="btn-agrup-expand" id="ae-btn-${ai}">▸ Ver meses</button></td>
+      <td style="text-align:center;vertical-align:middle;"><div class="agrup-blanco-lbl" style="color:#fcd34d;">% Proyección</div><div class="agrup-blanco-val" style="color:#fcd34d;">${pctProyec}</div></td>
       <td></td>`;
-    tbody.appendChild(trAgrup);
-    trAgrup.querySelector(".btn-agrup-expand").addEventListener("click", (e) => { e.stopPropagation(); toggleAgrupExpand(ai); });
-
-    // Fila expandible agrupación
-    const trAgrupExp = document.createElement("tr");
-    trAgrupExp.className = "agrup-expand-row hidden";
-    trAgrupExp.dataset.agrupIdx = ai;
-    trAgrupExp.innerHTML = `<td colspan="8"><div class="agrup-expand-inner" id="ae-inner-${ai}"></div></td>`;
-    tbody.appendChild(trAgrupExp);
-
-    // Filas de iglesias
-    iglesias.forEach((g) => {
-      const key    = encodeKey(g.grupo, g.iglesia);
-      const consol = parseInt(g.total) || 0;
-      const inter  = calcularInteresados(g);
-      const pct    = blancoAgrup > 0 ? Math.round((consol / blancoAgrup) * 100) : 0;
-      const fill   = Math.min(pct, 100);
-      const pctIg  = blancoAgrup > 0 ? Math.round(((consol + inter) / blancoAgrup) * 100) + "%" : "—";
-
-      const tr = document.createElement("tr");
-      tr.className = "iglesia-row";
-      tr.dataset.key = key;
-      tr.innerHTML = `
-        <td class="td-iglesia">${g.iglesia || "—"}</td>
-        <td class="td-resp">${g.responsable || "—"}</td>
-        <td class="td-consol">
-          <div class="mini-bar-wrap">
-            <div class="mini-bar"><div class="mini-bar-fill" style="width:${fill}%"></div></div>
-            <span>${consol}</span>
-          </div>
-        </td>
-        <td class="td-consol" style="text-align:center;">
-          <span class="badge ${pct >= 100 ? "badge-green" : pct >= 50 ? "badge-blue" : "badge-warn"}">${pct}%</span>
-        </td>
-        <td class="td-inter">${inter > 0 ? inter : '<span style="color:#7a8fa3;font-weight:400;">—</span>'}</td>
-        <td style="text-align:center;">
-          <button class="btn-expand" id="expand-${key}" data-ekey="${key}">▸ Ver meses</button>
-        </td>
-        <td style="text-align:center;">
-          <span class="badge ${pct >= 100 ? "badge-green" : "badge-blue"}">${pctIg}</span>
-        </td>
-        <td style="text-align:right;">
-          <button class="btn-registrar" data-rkey="${key}">Registrar</button>
-        </td>`;
+    tbody.appendChild(trA);
+    trA.querySelector(".btn-agrup-expand").addEventListener("click", e => { e.stopPropagation(); toggleAgrupExpand(ai); });
+    const trAE = document.createElement("tr"); trAE.className="agrup-expand-row hidden"; trAE.dataset.agrupIdx=ai;
+    trAE.innerHTML=`<td colspan="8"><div class="agrup-expand-inner" id="ae-inner-${ai}"></div></td>`;
+    tbody.appendChild(trAE);
+    iglesias.forEach(g => {
+      const key=encodeKey(g.grupo,g.iglesia), consol=parseInt(g.total)||0, inter=calcularInteresados(g);
+      const pct=blancoAgrup>0?Math.round((consol/blancoAgrup)*100):0, fill=Math.min(pct,100);
+      const pctIg=blancoAgrup>0?Math.round(((consol+inter)/blancoAgrup)*100)+"%":"—";
+      const tr=document.createElement("tr"); tr.className="iglesia-row"; tr.dataset.key=key;
+      tr.innerHTML=`
+        <td class="td-iglesia">${g.iglesia||"—"}</td>
+        <td class="td-resp">${g.responsable||"—"}</td>
+        <td class="td-consol"><div class="mini-bar-wrap"><div class="mini-bar"><div class="mini-bar-fill" style="width:${fill}%"></div></div><span>${consol}</span></div></td>
+        <td class="td-consol" style="text-align:center;"><span class="badge ${pct>=100?"badge-green":pct>=50?"badge-blue":"badge-warn"}">${pct}%</span></td>
+        <td class="td-inter">${inter>0?inter:'<span style="color:#7a8fa3;font-weight:400;">—</span>'}</td>
+        <td style="text-align:center;"><button class="btn-expand" id="expand-${key}">▸ Ver meses</button></td>
+        <td style="text-align:center;"><span class="badge ${pct>=100?"badge-green":"badge-blue"}">${pctIg}</span></td>
+        <td style="text-align:right;"><button class="btn-registrar" data-rkey="${key}">Registrar</button></td>`;
       tbody.appendChild(tr);
-      tr.querySelector(".btn-expand").addEventListener("click", (e) => { e.stopPropagation(); toggleExpand(key); });
-      tr.querySelector(".btn-registrar").addEventListener("click", (e) => { e.stopPropagation(); abrirPanel(key); });
-
-      // Fila expandible iglesia
-      const trExp = document.createElement("tr");
-      trExp.className = "expand-row hidden";
-      trExp.dataset.expandKey = key;
-      trExp.innerHTML = `<td colspan="8"><div class="expand-inner" id="expand-inner-${key}"></div></td>`;
+      tr.querySelector(".btn-expand").addEventListener("click", e=>{e.stopPropagation();toggleExpand(key);});
+      tr.querySelector(".btn-registrar").addEventListener("click", e=>{e.stopPropagation();abrirPanel(key);});
+      const trExp=document.createElement("tr"); trExp.className="expand-row hidden"; trExp.dataset.expandKey=key;
+      trExp.innerHTML=`<td colspan="8"><div class="expand-inner" id="expand-inner-${key}"></div></td>`;
       tbody.appendChild(trExp);
     });
   });
-
-  // Mapa key → iglesia
-  const lookup = {};
-  (gruposMap[grupoSelKey] || []).forEach(g => { lookup[encodeKey(g.grupo, g.iglesia)] = g; });
-  window._iglesiaLookup = lookup;
-
-  // Mapa idx → agrupNombre
-  window._agrupIdxMap = {};
-  agrupKeys.forEach((nombre, i) => { window._agrupIdxMap[i] = nombre; });
+  const lookup={};
+  (gruposMap[grupoSelKey]||[]).forEach(g=>{lookup[encodeKey(g.grupo,g.iglesia)]=g;});
+  window._iglesiaLookup=lookup;
+  window._agrupIdxMap={};
+  agrupKeys.forEach((n,i)=>{window._agrupIdxMap[i]=n;});
 }
 
-// ── Expandir agrupación ──
 function toggleAgrupExpand(ai) {
-  const trExp = document.querySelector(`.agrup-expand-row[data-agrup-idx="${ai}"]`);
-  const btn   = document.getElementById("ae-btn-" + ai);
+  const trExp=document.querySelector(`.agrup-expand-row[data-agrup-idx="${ai}"]`);
+  const btn=document.getElementById("ae-btn-"+ai);
   if (!trExp) return;
-  if (trExp.classList.contains("hidden")) {
-    renderAgrupMonths(ai);
-    trExp.classList.remove("hidden");
-    btn.textContent = "▾ Ocultar";
-    btn.classList.add("ae-expanded");
-  } else {
-    trExp.classList.add("hidden");
-    btn.textContent = "▸ Ver meses";
-    btn.classList.remove("ae-expanded");
-  }
+  if (trExp.classList.contains("hidden")) { renderAgrupMonths(ai); trExp.classList.remove("hidden"); btn.textContent="▾ Ocultar"; btn.classList.add("ae-expanded"); }
+  else { trExp.classList.add("hidden"); btn.textContent="▸ Ver meses"; btn.classList.remove("ae-expanded"); }
 }
 
 function renderAgrupMonths(ai) {
-  const agrupNombre = window._agrupIdxMap[ai] || "";
-  const iglesias    = agrupMap[grupoSelKey][agrupNombre] || [];
-  const container   = document.getElementById("ae-inner-" + ai);
-  if (!container) return;
-  const mesActual  = new Date().getMonth();
-  const porMes     = Array(12).fill(0);
-  const totalInter = iglesias.reduce((s, g) => s + calcularInteresados(g), 0);
-  iglesias.forEach(g => {
-    if (!g.sabados) return;
-    Object.entries(g.sabados).forEach(([fecha, cant]) => {
-      porMes[new Date(fecha).getMonth()] += parseInt(cant) || 0;
-    });
-  });
-  const cells = MESES.map((m, i) => {
-    const val = porMes[i];
-    const cls = i === mesActual ? "am-current" : val > 0 ? "am-active" : "";
-    return `<div class="am-cell ${cls}"><div class="am-name">${m}</div><div class="am-val">${val > 0 ? val : "·"}</div></div>`;
-  }).join("");
-  container.innerHTML = `
-    <div class="agrup-expand-title">Bautismos pendientes por mes &nbsp;<span style="color:rgba(255,255,255,0.4);font-weight:400;">Total: ${totalInter}</span></div>
-    <div class="agrup-months-grid">${cells}</div>`;
+  const agrupNombre=window._agrupIdxMap[ai]||"", iglesias=agrupMap[grupoSelKey][agrupNombre]||[];
+  const container=document.getElementById("ae-inner-"+ai); if (!container) return;
+  const mesActual=new Date().getMonth(), porMes=Array(12).fill(0);
+  const totalInter=iglesias.reduce((s,g)=>s+calcularInteresados(g),0);
+  iglesias.forEach(g=>{if(!g.sabados)return;Object.entries(g.sabados).forEach(([f,c])=>{porMes[new Date(f).getMonth()]+=parseInt(c)||0;});});
+  const cells=MESES.map((m,i)=>{const val=porMes[i],cls=i===mesActual?"am-current":val>0?"am-active":"";
+    return `<div class="am-cell ${cls}"><div class="am-name">${m}</div><div class="am-val">${val>0?val:"·"}</div></div>`;}).join("");
+  container.innerHTML=`<div class="agrup-expand-title">Bautismos pendientes por mes &nbsp;<span style="color:rgba(255,255,255,0.4);font-weight:400;">Total: ${totalInter}</span></div><div class="agrup-months-grid">${cells}</div>`;
 }
 
-// ── Expandir iglesia ──
 function toggleExpand(key) {
-  const trExp = document.querySelector(`.expand-row[data-expand-key="${key}"]`);
-  const btn   = document.getElementById("expand-" + key);
-  if (!trExp) return;
-  if (trExp.classList.contains("hidden")) {
-    renderExpandMonths(key);
-    trExp.classList.remove("hidden");
-    btn.textContent = "▾ Ocultar";
-    btn.classList.add("expanded");
-  } else {
-    trExp.classList.add("hidden");
-    btn.textContent = "▸ Ver meses";
-    btn.classList.remove("expanded");
-  }
+  const trExp=document.querySelector(`.expand-row[data-expand-key="${key}"]`);
+  const btn=document.getElementById("expand-"+key); if (!trExp) return;
+  if (trExp.classList.contains("hidden")) { renderExpandMonths(key); trExp.classList.remove("hidden"); btn.textContent="▾ Ocultar"; btn.classList.add("expanded"); }
+  else { trExp.classList.add("hidden"); btn.textContent="▸ Ver meses"; btn.classList.remove("expanded"); }
 }
 
 function renderExpandMonths(key) {
-  const container = document.getElementById("expand-inner-" + key);
-  const g         = window._iglesiaLookup[key];
-  if (!container || !g) return;
-  const mesActual  = new Date().getMonth();
-  const totalInter = calcularInteresados(g);
-  const porMes     = Array(12).fill(0);
-  if (g.sabados) {
-    Object.entries(g.sabados).forEach(([fecha, cant]) => {
-      porMes[new Date(fecha).getMonth()] += parseInt(cant) || 0;
-    });
-  }
-  const cells = MESES.map((m, i) => {
-    const val = porMes[i];
-    const cls = i === mesActual ? "ms-current" : val > 0 ? "ms-active" : "";
-    return `<div class="ms-cell ${cls}"><div class="ms-name">${m}</div><div class="ms-val">${val > 0 ? val : "·"}</div></div>`;
-  }).join("");
-  container.innerHTML = `
-    <div class="expand-title">Bautismos pendientes por mes · ${g.iglesia} &nbsp;<span style="font-weight:400;color:var(--text-muted);font-size:11px;">Total: ${totalInter}</span></div>
-    <div class="months-summary">${cells}</div>`;
+  const container=document.getElementById("expand-inner-"+key), g=window._iglesiaLookup[key];
+  if (!container||!g) return;
+  const mesActual=new Date().getMonth(), totalInter=calcularInteresados(g), porMes=Array(12).fill(0);
+  if (g.sabados) Object.entries(g.sabados).forEach(([f,c])=>{porMes[new Date(f).getMonth()]+=parseInt(c)||0;});
+  const cells=MESES.map((m,i)=>{const val=porMes[i],cls=i===mesActual?"ms-current":val>0?"ms-active":"";
+    return `<div class="ms-cell ${cls}"><div class="ms-name">${m}</div><div class="ms-val">${val>0?val:"·"}</div></div>`;}).join("");
+  container.innerHTML=`<div class="expand-title">Bautismos pendientes por mes · ${g.iglesia} &nbsp;<span style="font-weight:400;color:var(--text-muted);font-size:11px;">Total: ${totalInter}</span></div><div class="months-summary">${cells}</div>`;
 }
 
-// ── Panel de registro ──
 function abrirPanel(key) {
-  iglesiaActual = window._iglesiaLookup[key];
-  iglesiaIdx    = key;
-  sabadoSel     = null;
-  mesFiltro     = new Date().getMonth();
-  document.querySelectorAll(".iglesia-row").forEach(r => r.classList.remove("ir-sel"));
-  const tr = document.querySelector(`.iglesia-row[data-key="${key}"]`);
-  if (tr) tr.classList.add("ir-sel");
-  document.getElementById("regTitle").textContent = iglesiaActual.iglesia || iglesiaActual.grupo;
-  document.getElementById("regSub").textContent   = iglesiaActual.responsable + " · " + iglesiaActual.agrupacion;
-  document.getElementById("regPanel").classList.add("open");
-  document.body.style.overflow = "hidden";
-  document.getElementById("numFieldWrap").style.display = "none";
-  document.getElementById("btnGuardar").disabled = true;
-  ocultarToasts();
-  renderPanelMonthly();
-  renderMonthTabs();
-  renderSabados(mesFiltro);
+  iglesiaActual=window._iglesiaLookup[key]; iglesiaIdx=key; sabadoSel=null; mesFiltro=new Date().getMonth();
+  document.querySelectorAll(".iglesia-row").forEach(r=>r.classList.remove("ir-sel"));
+  const tr=document.querySelector(`.iglesia-row[data-key="${key}"]`); if (tr) tr.classList.add("ir-sel");
+  document.getElementById("regTitle").textContent=iglesiaActual.iglesia||iglesiaActual.grupo;
+  document.getElementById("regSub").textContent=iglesiaActual.responsable+" · "+iglesiaActual.agrupacion;
+  document.getElementById("regPanel").classList.add("open"); document.body.style.overflow="hidden";
+  document.getElementById("numFieldWrap").style.display="none";
+  document.getElementById("btnGuardar").disabled=true;
+  ocultarToasts(); renderPanelMonthly(); renderMonthTabs(); renderSabados(mesFiltro);
 }
 
 function cerrarPanel() {
-  document.getElementById("regPanel").classList.remove("open");
-  document.body.style.overflow = "";
-  document.querySelectorAll(".iglesia-row").forEach(r => r.classList.remove("ir-sel"));
-  if (window._tablaNeedsRefresh) {
-    renderTotales();
-    renderTabla();
-    window._tablaNeedsRefresh = false;
-  }
-  iglesiaActual = null; sabadoSel = null;
+  document.getElementById("regPanel").classList.remove("open"); document.body.style.overflow="";
+  document.querySelectorAll(".iglesia-row").forEach(r=>r.classList.remove("ir-sel"));
+  if (window._tablaNeedsRefresh) { renderTotales(); renderTabla(); window._tablaNeedsRefresh=false; }
+  iglesiaActual=null; sabadoSel=null;
 }
 
-function handleOverlayClick(e) {
-  if (e.target === document.getElementById("regPanel")) cerrarPanel();
-}
+function handleOverlayClick(e) { if (e.target===document.getElementById("regPanel")) cerrarPanel(); }
 
 function renderPanelMonthly() {
   if (!iglesiaActual) return;
-  const mesActual = new Date().getMonth();
-  const porMes    = Array(12).fill(0);
-  if (iglesiaActual.sabados) {
-    Object.entries(iglesiaActual.sabados).forEach(([fecha, cant]) => {
-      porMes[new Date(fecha).getMonth()] += parseInt(cant) || 0;
-    });
-  }
-  const grid = document.getElementById("pmGrid");
-  if (!grid) return;
-  grid.innerHTML = MESES.map((m, i) => {
-    const val = porMes[i];
-    const cls = i === mesActual ? "pm-current" : val > 0 ? "pm-active" : "";
-    return `<div class="pm-cell ${cls}"><div class="pm-name">${m}</div><div class="pm-val" style="${val === 0 ? "color:var(--border)" : ""}">${val > 0 ? val : "·"}</div></div>`;
-  }).join("");
+  const mesActual=new Date().getMonth(), porMes=Array(12).fill(0);
+  if (iglesiaActual.sabados) Object.entries(iglesiaActual.sabados).forEach(([f,c])=>{porMes[new Date(f).getMonth()]+=parseInt(c)||0;});
+  const grid=document.getElementById("pmGrid"); if (!grid) return;
+  grid.innerHTML=MESES.map((m,i)=>{const val=porMes[i],cls=i===mesActual?"pm-current":val>0?"pm-active":"";
+    return `<div class="pm-cell ${cls}"><div class="pm-name">${m}</div><div class="pm-val" style="${val===0?"color:var(--border)":""}">${val>0?val:"·"}</div></div>`;}).join("");
 }
 
 function renderMonthTabs() {
-  const c = document.getElementById("monthTabs");
-  c.innerHTML = "";
-  MESES.forEach((m, i) => {
-    const tieneData = todosSabados.filter(s => s.getMonth() === i)
-      .some(s => (iglesiaActual.sabados?.[s.toISOString().split("T")[0]] || 0) > 0);
-    const tab = document.createElement("button");
-    tab.className = "month-tab" + (tieneData ? " mt-data" : "") + (i === mesFiltro ? " mt-sel" : "");
-    tab.textContent = m;
-    tab.addEventListener("click", () => {
-      mesFiltro = i;
-      document.querySelectorAll(".month-tab").forEach(t => t.classList.remove("mt-sel"));
-      tab.classList.add("mt-sel");
-      sabadoSel = null;
-      document.getElementById("numFieldWrap").style.display = "none";
-      document.getElementById("btnGuardar").disabled = true;
-      ocultarToasts();
-      renderSabados(i);
+  const c=document.getElementById("monthTabs"); c.innerHTML="";
+  MESES.forEach((m,i)=>{
+    const tieneData=todosSabados.filter(s=>s.getMonth()===i).some(s=>(iglesiaActual.sabados?.[s.toISOString().split("T")[0]]||0)>0);
+    const tab=document.createElement("button");
+    tab.className="month-tab"+(tieneData?" mt-data":"")+(i===mesFiltro?" mt-sel":"");
+    tab.textContent=m;
+    tab.addEventListener("click",()=>{
+      mesFiltro=i; document.querySelectorAll(".month-tab").forEach(t=>t.classList.remove("mt-sel")); tab.classList.add("mt-sel");
+      sabadoSel=null; document.getElementById("numFieldWrap").style.display="none";
+      document.getElementById("btnGuardar").disabled=true; ocultarToasts(); renderSabados(i);
     });
     c.appendChild(tab);
   });
 }
 
 function renderSabados(mesIdx) {
-  document.getElementById("satLabel").textContent = "Sábados de " + MESES_FULL[mesIdx];
-  const c = document.getElementById("satGrid");
-  c.innerHTML = "";
-  const sabs = todosSabados.filter(s => s.getMonth() === mesIdx);
-  if (!sabs.length) { c.innerHTML = '<div class="empty-msg">No hay sábados en este mes</div>'; return; }
-  sabs.forEach(s => {
-    const key  = s.toISOString().split("T")[0];
-    const prev = parseInt(iglesiaActual.sabados?.[key]) || 0;
-    const card = document.createElement("div");
-    card.className = "sat-card" + (prev > 0 ? " sc-data" : "");
-    card.innerHTML = `<div class="sc-day">${s.getDate()}</div><div class="sc-month">${MESES[mesIdx]} ${s.getFullYear()}</div>${prev > 0 ? `<div class="sc-prev">✓ ${prev}</div>` : ""}`;
-    card.addEventListener("click", () => seleccionarSabado(card, s, key, prev));
+  document.getElementById("satLabel").textContent="Sábados de "+MESES_FULL[mesIdx];
+  const c=document.getElementById("satGrid"); c.innerHTML="";
+  const sabs=todosSabados.filter(s=>s.getMonth()===mesIdx);
+  if (!sabs.length) { c.innerHTML='<div class="empty-msg">No hay sábados en este mes</div>'; return; }
+  sabs.forEach(s=>{
+    const key=s.toISOString().split("T")[0], prev=parseInt(iglesiaActual.sabados?.[key])||0;
+    const card=document.createElement("div");
+    card.className="sat-card"+(prev>0?" sc-data":"");
+    card.innerHTML=`<div class="sc-day">${s.getDate()}</div><div class="sc-month">${MESES[mesIdx]} ${s.getFullYear()}</div>${prev>0?`<div class="sc-prev">✓ ${prev}</div>`:""}`;
+    card.addEventListener("click",()=>seleccionarSabado(card,s,key,prev));
     c.appendChild(card);
   });
 }
 
-function seleccionarSabado(el, fecha, key, prevVal) {
-  document.querySelectorAll(".sat-card").forEach(c => c.classList.remove("sc-sel"));
-  el.classList.add("sc-sel");
-  sabadoSel = { fecha, key, mes: fecha.getMonth() };
-  document.getElementById("numLabel").textContent = "Bautismos (Pendientes) — sáb. " + fecha.getDate() + " de " + MESES_FULL[fecha.getMonth()];
-  document.getElementById("inputCantidad").value = prevVal || 0;
-  document.getElementById("numFieldWrap").style.display = "block";
-  document.getElementById("btnGuardar").disabled = false;
-  ocultarToasts();
+function seleccionarSabado(el,fecha,key,prevVal) {
+  document.querySelectorAll(".sat-card").forEach(c=>c.classList.remove("sc-sel"));
+  el.classList.add("sc-sel"); sabadoSel={fecha,key,mes:fecha.getMonth()};
+  document.getElementById("numLabel").textContent="Bautismos (Pendientes) — sáb. "+fecha.getDate()+" de "+MESES_FULL[fecha.getMonth()];
+  document.getElementById("inputCantidad").value=prevVal||0;
+  document.getElementById("numFieldWrap").style.display="block";
+  document.getElementById("btnGuardar").disabled=false; ocultarToasts();
 }
 
 function cambiarNum(delta) {
-  const inp = document.getElementById("inputCantidad");
-  inp.value = Math.max(0, (parseInt(inp.value) || 0) + delta);
+  const inp=document.getElementById("inputCantidad");
+  inp.value=Math.max(0,(parseInt(inp.value)||0)+delta);
 }
 
 async function guardar() {
-  if (!sabadoSel || !iglesiaActual) return;
-  const cantidad = Math.max(0, parseInt(document.getElementById("inputCantidad").value) || 0);
+  if (!sabadoSel||!iglesiaActual) return;
+  const cantidad=Math.max(0,parseInt(document.getElementById("inputCantidad").value)||0);
   setGuardando(true); ocultarToasts();
-  // La acción y los campos del payload no cambian — el backend los espera igual
-  const payload = { action:"guardarInteresados", grupo:iglesiaActual.grupo, iglesia:iglesiaActual.iglesia, fecha:sabadoSel.key, mes:sabadoSel.mes, cantidad };
+  const payload={action:"guardarInteresados",grupo:iglesiaActual.grupo,iglesia:iglesiaActual.iglesia,fecha:sabadoSel.key,mes:sabadoSel.mes,cantidad};
   try {
-    await fetch(APPS_SCRIPT_URL, { method:"POST", mode:"no-cors", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) });
-    if (!iglesiaActual.sabados) iglesiaActual.sabados = {};
-    iglesiaActual.sabados[sabadoSel.key] = cantidad;
-    window._tablaNeedsRefresh = true;
-    renderPanelMonthly();
-    renderMonthTabs();
-    renderSabados(mesFiltro);
-    document.getElementById("toastOkMsg").textContent = cantidad + " bautismo(s) pendiente(s) guardados — sáb. " + sabadoSel.fecha.getDate() + " de " + MESES_FULL[sabadoSel.mes] + ".";
-    document.getElementById("toastOk").style.display = "flex";
-    sabadoSel = null;
-    document.getElementById("numFieldWrap").style.display = "none";
-    document.getElementById("btnGuardar").disabled = true;
+    await fetch(APPS_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    if (!iglesiaActual.sabados) iglesiaActual.sabados={};
+    iglesiaActual.sabados[sabadoSel.key]=cantidad;
+    window._tablaNeedsRefresh=true;
+    renderPanelMonthly(); renderMonthTabs(); renderSabados(mesFiltro);
+    document.getElementById("toastOkMsg").textContent=cantidad+" bautismo(s) pendiente(s) guardados — sáb. "+sabadoSel.fecha.getDate()+" de "+MESES_FULL[sabadoSel.mes]+".";
+    document.getElementById("toastOk").style.display="flex";
+    sabadoSel=null; document.getElementById("numFieldWrap").style.display="none"; document.getElementById("btnGuardar").disabled=true;
   } catch(err) {
-    document.getElementById("toastErrMsg").textContent = "Error: " + err.message;
-    document.getElementById("toastErr").style.display = "flex";
+    document.getElementById("toastErrMsg").textContent="Error: "+err.message;
+    document.getElementById("toastErr").style.display="flex";
   } finally { setGuardando(false); }
 }
 
 function setGuardando(v) {
-  document.getElementById("btnGuardar").disabled = v;
-  document.getElementById("btnSpinner").style.display = v ? "block" : "none";
-  document.getElementById("btnGuardarTxt").textContent = v ? "Guardando..." : "Guardar bautismos pendientes";
+  document.getElementById("btnGuardar").disabled=v;
+  document.getElementById("btnSpinner").style.display=v?"block":"none";
+  document.getElementById("btnGuardarTxt").textContent=v?"Guardando...":"Guardar bautismos pendientes";
 }
-function ocultarToasts() {
-  document.getElementById("toastOk").style.display = "none";
-  document.getElementById("toastErr").style.display = "none";
-}
+function ocultarToasts() { document.getElementById("toastOk").style.display="none"; document.getElementById("toastErr").style.display="none"; }
 function irPaso1() {
-  document.getElementById("step2").style.display = "none";
-  document.getElementById("step1").style.display = "block";
-  grupoSelKey = null; iglesiaActual = null; sabadoSel = null;
-  document.getElementById("selGrupo").value = "";
-  document.getElementById("btnVerSubgrupos").disabled = true;
-  document.getElementById("pageTitle").textContent    = "Registro de Bautismos (Pendientes)";
-  document.getElementById("pageSubtitle").textContent = "Selecciona el grupo para ver sus iglesias y registrar bautismos pendientes";
-  document.getElementById("breadcrumb").innerHTML = `<span>Inicio</span> <span>›</span> <span class="bc-active">Selección de grupo</span>`;
+  document.getElementById("step2").style.display="none"; document.getElementById("step1").style.display="block";
+  grupoSelKey=null; iglesiaActual=null; sabadoSel=null;
+  document.getElementById("selGrupo").value=""; document.getElementById("btnVerSubgrupos").disabled=true;
+  document.getElementById("pageTitle").textContent="Registro de Bautismos (Pendientes)";
+  document.getElementById("pageSubtitle").textContent="Selecciona el grupo para ver sus iglesias y registrar bautismos pendientes";
+  document.getElementById("breadcrumb").innerHTML=`<span>Inicio</span> <span>›</span> <span class="bc-active">Selección de grupo</span>`;
 }
 
 cargarGrupos();
