@@ -501,7 +501,7 @@
 // ============================================================
 // ⚠️ PEGA AQUÍ LA URL DE TU APPS SCRIPT WEB APP
 // ============================================================
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRjcbdESOt2oZCF15qHXAmsTfpXsh3UW7r7lzwAZxi4Xj4TKJgn-K7DDDOARgpAjA/exec";
+const SCRIPT_URL = "PEGA_AQUI_LA_URL_DE_TU_APPS_SCRIPT_WEB_APP";
 
 const GRUPOS = ["KALEB","BERIT","GEDEONES","SOY CALEB","JÉSED","EMUNÁ","ADONAI","DANIEL"];
 
@@ -729,9 +729,11 @@ function mostrarScreen(id) {
 async function api(data) {
   const res = await fetch(SCRIPT_URL, {
     method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
     body: JSON.stringify(data)
   });
-  return res.json();
+  const text = await res.text();
+  try { return JSON.parse(text); } catch(e) { return { ok: false, error: "Error: " + text.slice(0,100) }; }
 }
 
 // ============================================================
