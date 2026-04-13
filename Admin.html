@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Admin — Asistencia MBON</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  /* ============================================================
+     PEGA LA URL DE TU APPS SCRIPT WEB APP EN LA VARIABLE
+     SCRIPT_URL QUE ESTÁ AL INICIO DEL JAVASCRIPT
+     ============================================================ */
+
+  :root {
+    --verde: #00C896;
+    --verde-dark: #00A87A;
+    --rojo: #FF4757;
+    --amarillo: #FFD32A;
+    --bg: #0A0F1E;
+    --bg2: #111827;
+    --bg3: #1C2537;
+    --text: #F0F4FF;
+    --muted: #8892A4;
+    --border: #1E2D45;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* FONDO ANIMADO */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 20% 20%, rgba(0,200,150,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0,100,200,0.05) 0%, transparent 50%);
+    animation: bgPulse 8s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes bgPulse {
+    0% { transform: scale(1) rotate(0deg); }
+    100% { transform: scale(1.1) rotate(3deg); }
+  }
+
+  .container { max-width: 1000px; margin: 0 auto; padding: 24px 16px; position: relative; z-index: 1; }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--verde);
+  }
+
+  .logo span { color: var(--text); }
+
+  .badge-estado {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .badge-inactivo { background: rgba(255,71,87,0.15); color: var(--rojo); border: 1px solid rgba(255,71,87,0.3); }
+  .badge-activo { background: rgba(0,200,150,0.15); color: var(--verde); border: 1px solid rgba(0,200,150,0.3); animation: pulseGreen 2s infinite; }
+
+  @keyframes pulseGreen {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,200,150,0.3); }
+    50% { box-shadow: 0 0 0 6px rgba(0,200,150,0); }
+  }
+
+  /* PANTALLA INICIO SESIÓN */
+  .screen { display: none; animation: fadeIn 0.4s ease; }
+  .screen.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* CARD */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: var(--verde);
+    margin-bottom: 20px;
+  }
+
+  /* BOTONES */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-primary {
+    background: var(--verde);
+    color: #0A0F1E;
+    width: 100%;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .btn-primary:hover { background: var(--verde-dark); transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .btn-danger {
+    background: rgba(255,71,87,0.15);
+    color: var(--rojo);
+    border: 1px solid rgba(255,71,87,0.3);
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn-danger:hover { background: rgba(255,71,87,0.25); }
+
+  .btn-secondary {
+    background: var(--bg3);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover { background: var(--border); }
+
+  /* CAPTURA UBICACIÓN */
+  .loc-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .loc-icon { font-size: 28px; }
+
+  .loc-info { flex: 1; }
+  .loc-info .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .loc-info .value { font-size: 14px; font-weight: 500; margin-top: 2px; }
+
+  /* QR PANEL */
+  .qr-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .qr-container {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 0 60px rgba(0,200,150,0.2);
+    position: relative;
+  }
+
+  .qr-overlay-text {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* COUNTDOWN */
+  .countdown-ring {
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+
+  .countdown-ring svg { transform: rotate(-90deg); }
+
+  .countdown-ring .bg-circle { fill: none; stroke: var(--bg3); stroke-width: 6; }
+  .countdown-ring .progress-circle {
+    fill: none;
+    stroke: var(--verde);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear;
+  }
+
+  .countdown-number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: var(--verde);
+  }
+
+  /* CÓDIGO TEXTO */
+  .codigo-display {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 8px;
+    color: var(--text);
+    background: var(--bg3);
+    padding: 12px 24px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  /* CONTADOR */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .stat-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .stat-card.highlight { border-color: var(--verde); background: rgba(0,200,150,0.05); }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--verde);
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* GRUPOS EN VIVO */
+  .grupo-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+
+  .grupo-row:hover { border-color: var(--verde); }
+
+  .grupo-nombre { font-weight: 600; font-size: 14px; }
+  .grupo-nums { display: flex; gap: 16px; font-size: 13px; }
+  .num-total { color: var(--text); font-weight: 700; }
+  .num-puntual { color: var(--verde); font-weight: 700; }
+  .num-tarde { color: var(--amarillo); font-weight: 700; }
+
+  /* RESUMEN CIERRE */
+  .resumen-dia {
+    background: var(--bg3);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 16px;
+  }
+
+  .resumen-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    color: var(--amarillo);
+  }
+
+  .resumen-grupo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .resumen-grupo:last-child { border-bottom: none; }
+
+  .pct-bar {
+    width: 80px;
+    height: 6px;
+    background: var(--bg);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .pct-fill {
+    height: 100%;
+    background: var(--verde);
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 9999;
+    transition: transform 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.success { border-color: var(--verde); color: var(--verde); }
+  .toast.error { border-color: var(--rojo); color: var(--rojo); }
+
+  /* LOADER */
+  .loader {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(0,200,150,0.2);
+    border-top-color: var(--verde);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+  /* SEMANAL */
+  .semana-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .semana-periodo {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .ganador-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(255,211,42,0.15);
+    color: var(--amarillo);
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: var(--bg3);
+    padding: 4px;
+    border-radius: 10px;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    transition: all 0.2s;
+    border: none;
+    background: transparent;
+  }
+
+  .tab.active {
+    background: var(--bg2);
+    color: var(--verde);
+    border: 1px solid var(--border);
+  }
+
+  @media (min-width: 600px) {
+    .qr-wrapper { flex-direction: row; justify-content: center; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="logo">MBON<span> · Admin</span></div>
+    <div id="badgeEstado" class="badge-estado badge-inactivo">● Sin sesión</div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="mostrarTab('tab-sesion')">📡 Sesión</button>
+    <button class="tab" onclick="mostrarTab('tab-semanal')">📊 Semanal</button>
+  </div>
+
+  <!-- ===== TAB SESIÓN ===== -->
+  <div id="tab-sesion">
+
+    <!-- PANTALLA: INICIAR SESIÓN -->
+    <div id="screen-inicio" class="screen active">
+      <div class="card">
+        <div class="card-title">📍 Ubicación del Salón</div>
+        <div class="loc-box">
+          <div class="loc-icon">🌐</div>
+          <div class="loc-info">
+            <div class="label">Coordenadas</div>
+            <div class="value" id="coordsTexto">Presiona el botón para capturar</div>
+          </div>
+        </div>
+        <button class="btn btn-secondary" style="width:100%;margin-bottom:12px;" onclick="capturarUbicacion()">
+          📍 Capturar mi ubicación actual
+        </button>
+        <div class="divider"></div>
+        <button class="btn btn-primary" id="btnIniciar" onclick="iniciarSesion()" disabled>
+          ▶ Iniciar Sesión de Asistencia
+        </button>
+      </div>
+    </div>
+
+    <!-- PANTALLA: SESIÓN ACTIVA -->
+    <div id="screen-activo" class="screen">
+      <!-- QR -->
+      <div class="card">
+        <div class="card-title">🔄 Código QR Activo</div>
+        <div class="qr-wrapper">
+          <div>
+            <div class="qr-container" id="qrContainer"></div>
+            <div class="qr-overlay-text">Escanear con cámara del móvil</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+            <div class="countdown-ring">
+              <svg width="80" height="80" viewBox="0 0 80 80">
+                <circle class="bg-circle" cx="40" cy="40" r="34"/>
+                <circle class="progress-circle" id="progressCircle" cx="40" cy="40" r="34"
+                  stroke-dasharray="213.6" stroke-dashoffset="0"/>
+              </svg>
+              <div class="countdown-number" id="countdownNum">5:00</div>
+            </div>
+            <div class="codigo-display" id="codigoDisplay">——</div>
+            <div style="font-size:12px;color:var(--muted);text-align:center;">Código cambia automáticamente</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS EN VIVO -->
+      <div class="card">
+        <div class="card-title">📊 Asistencia en Vivo</div>
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-card highlight">
+            <div class="stat-num" id="totalCount">0</div>
+            <div class="stat-label">Total</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="puntualCount" style="color:var(--verde)">0</div>
+            <div class="stat-label">Puntuales</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="tardeCount" style="color:var(--amarillo)">0</div>
+            <div class="stat-label">Tarde</div>
+          </div>
+        </div>
+        <div style="margin-top:16px;" id="gruposLive"></div>
+      </div>
+
+      <!-- CERRAR -->
+      <button class="btn btn-danger" onclick="confirmarCierre()">
+        ⏹ Cerrar Sesión
+      </button>
+    </div>
+
+    <!-- PANTALLA: RESUMEN CIERRE -->
+    <div id="screen-resumen" class="screen">
+      <div class="card">
+        <div class="card-title">✅ Resumen del Día</div>
+        <div id="resumenContenido"></div>
+        <div class="divider"></div>
+        <button class="btn btn-primary" onclick="nuevaSesion()">
+          ▶ Nueva Sesión
+        </button>
+      </div>
+    </div>
+
+  </div><!-- fin tab-sesion -->
+
+  <!-- ===== TAB SEMANAL ===== -->
+  <div id="tab-semanal" style="display:none;">
+    <div class="card">
+      <div class="semana-header">
+        <div class="card-title" style="margin-bottom:0;">📅 Resumen Semanal</div>
+        <button class="btn btn-secondary" style="padding:8px 16px;font-size:13px;" onclick="cargarSemanal()">↻ Actualizar</button>
+      </div>
+      <div class="semana-periodo" id="semanaPeriodo">Cargando...</div>
+      <div style="margin-top:16px;" id="semanalContenido">
+        <div style="text-align:center;padding:40px;color:var(--muted);">
+          <div class="loader"></div>
+          <div style="margin-top:12px;">Cargando datos...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- fin container -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// ⚠️ PEGA AQUÍ LA URL DE TU APPS SCRIPT WEB APP
+// ============================================================
+const SCRIPT_URL = "PEGA_AQUI_LA_URL_DE_TU_APPS_SCRIPT_WEB_APP";
+
+// ============================================================
+// ESTADO
+// ============================================================
+let sesionId = null;
+let latSalon = null;
+let lngSalon = null;
+let codigoActual = null;
+let countdownInterval = null;
+let updateInterval = null;
+let secondsLeft = 300;
+const DURACION = 300;
+const CIRCUNFERENCIA = 213.6;
+const GRUPOS = ["KALEB","BERIT","GEDEONES","SOY CALEB","JÉSED","EMUNÁ","ADONAI","DANIEL"];
+
+// ============================================================
+// TABS
+// ============================================================
+function mostrarTab(tabId) {
+  document.getElementById("tab-sesion").style.display = "none";
+  document.getElementById("tab-semanal").style.display = "none";
+  document.getElementById(tabId).style.display = "block";
+  document.querySelectorAll(".tab").forEach((t,i) => {
+    t.classList.toggle("active", (i === 0 && tabId === "tab-sesion") || (i === 1 && tabId === "tab-semanal"));
+  });
+  if (tabId === "tab-semanal") cargarSemanal();
+}
+
+// ============================================================
+// UBICACIÓN
+// ============================================================
+function capturarUbicacion() {
+  if (!navigator.geolocation) { toast("Tu navegador no soporta geolocalización", "error"); return; }
+  document.getElementById("coordsTexto").textContent = "Obteniendo ubicación...";
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      latSalon = pos.coords.latitude;
+      lngSalon = pos.coords.longitude;
+      document.getElementById("coordsTexto").textContent =
+        `${latSalon.toFixed(6)}, ${lngSalon.toFixed(6)} (±${Math.round(pos.coords.accuracy)}m)`;
+      document.getElementById("btnIniciar").disabled = false;
+      toast("Ubicación capturada ✓", "success");
+    },
+    err => {
+      document.getElementById("coordsTexto").textContent = "Error: " + err.message;
+      toast("No se pudo obtener ubicación", "error");
+    },
+    { enableHighAccuracy: true, timeout: 15000 }
+  );
+}
+
+// ============================================================
+// SESIÓN
+// ============================================================
+async function iniciarSesion() {
+  const btn = document.getElementById("btnIniciar");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loader"></span> Iniciando...';
+
+  try {
+    const res = await api({ accion: "iniciarSesion", lat: latSalon, lng: lngSalon });
+    if (!res.ok) throw new Error(res.error);
+    sesionId = res.sesionId;
+    codigoActual = res.codigo;
+    mostrarScreenActivo();
+    toast("Sesión iniciada ✓", "success");
+  } catch (e) {
+    toast(e.message, "error");
+    btn.disabled = false;
+    btn.textContent = "▶ Iniciar Sesión de Asistencia";
+  }
+}
+
+function mostrarScreenActivo() {
+  mostrarScreen("screen-activo");
+  document.getElementById("badgeEstado").className = "badge-estado badge-activo";
+  document.getElementById("badgeEstado").textContent = "● Sesión Activa";
+  generarQR(codigoActual);
+  iniciarCountdown();
+  iniciarUpdateLoop();
+}
+
+async function confirmarCierre() {
+  if (!confirm("¿Cerrar la sesión de asistencia?")) return;
+  clearInterval(countdownInterval);
+  clearInterval(updateInterval);
+
+  try {
+    const res = await api({ accion: "cerrarSesion", sesionId: sesionId });
+    if (!res.ok) throw new Error(res.error);
+    mostrarResumen(res.resumen);
+    document.getElementById("badgeEstado").className = "badge-estado badge-inactivo";
+    document.getElementById("badgeEstado").textContent = "● Sin sesión";
+    sesionId = null;
+  } catch (e) {
+    toast(e.message, "error");
+  }
+}
+
+function nuevaSesion() {
+  mostrarScreen("screen-inicio");
+  document.getElementById("btnIniciar").disabled = !latSalon;
+  document.getElementById("btnIniciar").textContent = "▶ Iniciar Sesión de Asistencia";
+}
+
+// ============================================================
+// QR Y COUNTDOWN
+// ============================================================
+function generarQR(codigo) {
+  const base = window.location.href.replace("admin.html", "registro.html");
+  const url = base + "?c=" + codigo;
+  const cont = document.getElementById("qrContainer");
+  cont.innerHTML = "";
+  new QRCode(cont, { text: url, width: 200, height: 200, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
+  document.getElementById("codigoDisplay").textContent = codigo;
+}
+
+function iniciarCountdown() {
+  secondsLeft = DURACION;
+  actualizarRing();
+
+  countdownInterval = setInterval(async () => {
+    secondsLeft--;
+    actualizarRing();
+
+    if (secondsLeft <= 0) {
+      secondsLeft = DURACION;
+      // Rotar código
+      try {
+        const res = await api({ accion: "validarQR", codigo: "ROTAR_" + sesionId });
+        // Llamar función de rotación directa
+        await rotarCodigo();
+      } catch(e) {}
+    }
+  }, 1000);
+}
+
+async function rotarCodigo() {
+  try {
+    // Obtener nueva sesión activa con código actualizado
+    const res = await api({ accion: "obtenerSesionActiva" });
+    if (res.ok) {
+      // Simular rotación obteniendo nuevo código
+      const resRot = await api({ accion: "iniciarSesion", lat: latSalon, lng: lngSalon, rotar: true, sesionId: sesionId });
+      // En realidad pedimos al backend que rote
+    }
+  } catch(e){}
+
+  // Generamos nuevo código localmente y actualizamos
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let nuevo = "";
+  for (let i = 0; i < 8; i++) nuevo += chars[Math.floor(Math.random() * chars.length)];
+  codigoActual = nuevo;
+  generarQR(codigoActual);
+
+  // Notificar al backend
+  try { await api({ accion: "actualizarCodigo", sesionId: sesionId, codigo: codigoActual }); } catch(e){}
+}
+
+function actualizarRing() {
+  const mins = Math.floor(secondsLeft / 60);
+  const secs = secondsLeft % 60;
+  document.getElementById("countdownNum").textContent = `${mins}:${secs.toString().padStart(2,"0")}`;
+  const pct = secondsLeft / DURACION;
+  const offset = CIRCUNFERENCIA * (1 - pct);
+  document.getElementById("progressCircle").style.strokeDashoffset = offset;
+
+  const color = pct > 0.5 ? "var(--verde)" : pct > 0.25 ? "var(--amarillo)" : "var(--rojo)";
+  document.getElementById("progressCircle").style.stroke = color;
+  document.getElementById("countdownNum").style.color = color;
+}
+
+// ============================================================
+// ACTUALIZACIÓN EN VIVO
+// ============================================================
+function iniciarUpdateLoop() {
+  actualizarStats();
+  updateInterval = setInterval(actualizarStats, 5000);
+}
+
+async function actualizarStats() {
+  if (!sesionId) return;
+  try {
+    const hoy = new Date().toISOString().slice(0,10);
+    const res = await api({ accion: "obtenerResumenDia", fecha: hoy });
+    if (!res.ok) return;
+
+    let total = 0, puntuales = 0, tarde = 0;
+    const html = GRUPOS.map(g => {
+      const d = res.resumen[g] || { total: 0, puntuales: 0 };
+      total += d.total;
+      puntuales += d.puntuales;
+      tarde += d.total - d.puntuales;
+      if (d.total === 0) return "";
+      return `<div class="grupo-row">
+        <div class="grupo-nombre">${g}</div>
+        <div class="grupo-nums">
+          <span class="num-total">👥 ${d.total}</span>
+          <span class="num-puntual">✅ ${d.puntuales}</span>
+          <span class="num-tarde">⏰ ${d.total - d.puntuales}</span>
+        </div>
+      </div>`;
+    }).join("");
+
+    document.getElementById("totalCount").textContent = total;
+    document.getElementById("puntualCount").textContent = puntuales;
+    document.getElementById("tardeCount").textContent = tarde;
+    document.getElementById("gruposLive").innerHTML = html || '<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px;">Esperando registros...</div>';
+  } catch(e) {}
+}
+
+// ============================================================
+// RESUMEN CIERRE
+// ============================================================
+function mostrarResumen(resumen) {
+  mostrarScreen("screen-resumen");
+  let total = 0, puntuales = 0;
+  const rows = GRUPOS.map(g => {
+    const d = resumen[g] || { total: 0, puntuales: 0 };
+    total += d.total;
+    puntuales += d.puntuales;
+    const pct = d.total > 0 ? Math.round(d.puntuales / d.total * 100) : 0;
+    return `<div class="resumen-grupo">
+      <div>
+        <div style="font-weight:600;font-size:14px;">${g}</div>
+        <div style="font-size:12px;color:var(--muted);">${d.puntuales}/${d.total} puntuales</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="pct-bar"><div class="pct-fill" style="width:${pct}%"></div></div>
+        <div style="font-weight:700;color:var(--verde);width:36px;text-align:right;">${pct}%</div>
+      </div>
+    </div>`;
+  }).join("");
+
+  document.getElementById("resumenContenido").innerHTML = `
+    <div style="display:flex;gap:12px;margin-bottom:16px;">
+      <div class="stat-card highlight" style="flex:1;padding:14px;">
+        <div class="stat-num">${total}</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="stat-card" style="flex:1;padding:14px;">
+        <div class="stat-num" style="color:var(--verde)">${puntuales}</div>
+        <div class="stat-label">Puntuales</div>
+      </div>
+      <div class="stat-card" style="flex:1;padding:14px;">
+        <div class="stat-num" style="color:var(--amarillo)">${total-puntuales}</div>
+        <div class="stat-label">Tarde</div>
+      </div>
+    </div>
+    <div class="resumen-dia">${rows}</div>`;
+}
+
+// ============================================================
+// RESUMEN SEMANAL
+// ============================================================
+async function cargarSemanal() {
+  document.getElementById("semanalContenido").innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);"><div class="loader"></div><div style="margin-top:12px;">Cargando...</div></div>';
+  try {
+    const res = await api({ accion: "obtenerResumenSemanal" });
+    if (!res.ok) throw new Error(res.error);
+    document.getElementById("semanaPeriodo").textContent = `${res.semana.inicio} — ${res.semana.fin}`;
+
+    // Ordenar por porcentaje
+    const sorted = GRUPOS
+      .map(g => ({ nombre: g, ...(res.grupos[g] || { total: 0, puntuales: 0, sesiones: 0, porcentaje: 0 }) }))
+      .sort((a, b) => b.porcentaje - a.porcentaje);
+
+    const rows = sorted.map((g, i) => `
+      <div class="resumen-grupo" style="padding:12px 0;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--muted);width:24px;">${i+1}</div>
+          <div>
+            <div style="font-weight:600;">${g.nombre} ${i===0?'<span class="ganador-badge">👑 LÍDER</span>':''}</div>
+            <div style="font-size:12px;color:var(--muted);">${g.puntuales}/${g.total} puntuales · ${g.sesiones} sesiones</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="pct-bar" style="width:60px;"><div class="pct-fill" style="width:${g.porcentaje}%"></div></div>
+          <div style="font-weight:700;color:var(--verde);width:40px;text-align:right;">${g.porcentaje}%</div>
+        </div>
+      </div>`).join("");
+
+    document.getElementById("semanalContenido").innerHTML = rows;
+  } catch(e) {
+    document.getElementById("semanalContenido").innerHTML = `<div style="color:var(--rojo);text-align:center;padding:20px;">${e.message}</div>`;
+  }
+}
+
+// ============================================================
+// UTILIDADES
+// ============================================================
+function mostrarScreen(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+async function api(data) {
+  const res = await fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+  return res.json();
+}
+
+function toast(msg, tipo = "success") {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast show " + tipo;
+  setTimeout(() => t.classList.remove("show"), 3000);
+}
+</script>
+</body>
+</html>
