@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Registro de Asistencia — MBON</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     PEGA LA URL DE TU APPS SCRIPT WEB APP EN LA VARIABLE
+     SCRIPT_URL QUE ESTÁ AL INICIO DEL JAVASCRIPT
+     ============================================================ */
+
+  :root {
+    --verde: #00C896;
+    --verde-dark: #00A87A;
+    --rojo: #FF4757;
+    --amarillo: #FFD32A;
+    --bg: #0A0F1E;
+    --bg2: #111827;
+    --bg3: #1C2537;
+    --text: #F0F4FF;
+    --muted: #8892A4;
+    --border: #1E2D45;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,200,150,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 480px; margin: 0 auto; padding: 24px 16px 40px; position: relative; z-index: 1; }
+
+  /* HEADER */
+  .header { text-align: center; margin-bottom: 32px; }
+
+  .logo-mark {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--verde), #0080FF);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 12px;
+    box-shadow: 0 8px 24px rgba(0,200,150,0.3);
+  }
+
+  .titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 3px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .subtitulo {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  /* SCREENS */
+  .screen { display: none; }
+  .screen.active { display: block; animation: slideUp 0.4s ease; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 18px; }
+
+  .form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .form-input, .form-select {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--bg2);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .form-input:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px rgba(0,200,150,0.1);
+  }
+
+  .form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238892A4' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+
+  .form-select option { background: var(--bg2); color: var(--text); }
+
+  /* UBICACIÓN INDICATOR */
+  .loc-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+
+  .loc-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--amarillo);
+    flex-shrink: 0;
+  }
+
+  .loc-dot.ok { background: var(--verde); animation: pulseDot 2s infinite; }
+  .loc-dot.error { background: var(--rojo); }
+
+  @keyframes pulseDot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,200,150,0.4); }
+    50% { box-shadow: 0 0 0 4px rgba(0,200,150,0); }
+  }
+
+  /* BOTÓN */
+  .btn-submit {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--verde), #00A878);
+    color: #0A0F1E;
+    border: none;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 20px rgba(0,200,150,0.3);
+  }
+
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,200,150,0.4); }
+  .btn-submit:active { transform: translateY(0); }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* SUCCESS SCREEN */
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--verde), #00A878);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin: 0 auto 20px;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 8px 32px rgba(0,200,150,0.4);
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .success-nombre {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .success-hora {
+    text-align: center;
+    font-size: 48px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 4px;
+    color: var(--verde);
+    margin: 16px 0;
+  }
+
+  .success-badges {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-puntual { background: rgba(0,200,150,0.15); color: var(--verde); border: 1px solid rgba(0,200,150,0.3); }
+  .badge-tarde { background: rgba(255,211,42,0.15); color: var(--amarillo); border: 1px solid rgba(255,211,42,0.3); }
+  .badge-grupo { background: rgba(255,255,255,0.05); color: var(--text); border: 1px solid var(--border); }
+
+  /* RANKING DIARIO */
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin: 28px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* RANKING ROW */
+  .rank-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+    animation: fadeRow 0.3s ease both;
+  }
+
+  @keyframes fadeRow {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .rank-row.winner {
+    border-color: var(--amarillo);
+    background: rgba(255,211,42,0.05);
+  }
+
+  .rank-pos {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--muted);
+    width: 28px;
+    flex-shrink: 0;
+  }
+
+  .rank-pos.gold { color: var(--amarillo); }
+  .rank-pos.silver { color: #C0C0C0; }
+  .rank-pos.bronze { color: #CD7F32; }
+
+  .rank-info { flex: 1; }
+
+  .rank-nombre { font-weight: 600; font-size: 14px; }
+  .rank-detalle { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .rank-pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--verde);
+  }
+
+  /* HISTORIAL DÍAS */
+  .dia-header {
+    display: grid;
+    grid-template-columns: 80px repeat(8, 1fr);
+    gap: 4px;
+    padding: 6px 8px;
+    font-size: 9px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    overflow-x: auto;
+  }
+
+  .hist-row {
+    display: grid;
+    grid-template-columns: 80px repeat(8, 1fr);
+    gap: 4px;
+    padding: 8px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    background: var(--bg2);
+    font-size: 12px;
+    overflow-x: auto;
+  }
+
+  .hist-fecha { color: var(--muted); font-size: 11px; }
+
+  .hist-cell {
+    text-align: center;
+    padding: 3px 2px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 11px;
+  }
+
+  .cell-win { background: rgba(255,211,42,0.15); color: var(--amarillo); }
+  .cell-ok { background: rgba(0,200,150,0.1); color: var(--verde); }
+  .cell-empty { color: var(--border); }
+
+  /* ERROR SCREEN */
+  .error-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(255,71,87,0.15);
+    border: 2px solid var(--rojo);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    margin: 0 auto 16px;
+  }
+
+  .error-msg {
+    text-align: center;
+    font-size: 16px;
+    color: var(--rojo);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .error-detail {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .btn-retry {
+    width: 100%;
+    padding: 14px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-retry:hover { background: var(--border); }
+
+  /* LOADER */
+  .loader {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(10,15,30,0.3);
+    border-top-color: #0A0F1E;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="logo-mark">✝</div>
+    <div class="titulo">ASISTENCIA</div>
+    <div class="subtitulo">MBON · Registro de Presencia</div>
+  </div>
+
+  <!-- ===== SCREEN: FORMULARIO ===== -->
+  <div id="screen-form" class="screen active">
+
+    <div class="loc-indicator">
+      <div class="loc-dot" id="locDot"></div>
+      <div id="locText" style="color:var(--muted);">Obteniendo ubicación...</div>
+    </div>
+
+    <div class="card">
+      <div class="form-group">
+        <label class="form-label">Nombre Completo</label>
+        <input type="text" id="inputNombre" class="form-input" placeholder="Ej: Juan Pérez Mamani" autocomplete="name" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Grupo</label>
+        <select id="selectGrupo" class="form-select">
+          <option value="">— Selecciona tu grupo —</option>
+          <option value="KALEB">1 · KALEB</option>
+          <option value="BERIT">2 · BERIT</option>
+          <option value="GEDEONES">3 · GEDEONES</option>
+          <option value="SOY CALEB">4 · SOY CALEB</option>
+          <option value="JÉSED">5 · JÉSED</option>
+          <option value="EMUNÁ">6 · EMUNÁ</option>
+          <option value="ADONAI">7 · ADONAI</option>
+          <option value="DANIEL">8 · DANIEL</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Número de Teléfono</label>
+        <input type="tel" id="inputTelefono" class="form-input" placeholder="Ej: 70000000" inputmode="numeric" />
+      </div>
+    </div>
+
+    <button class="btn-submit" id="btnEnviar" onclick="enviarRegistro()">
+      Registrar Asistencia
+    </button>
+  </div>
+
+  <!-- ===== SCREEN: ÉXITO ===== -->
+  <div id="screen-exito" class="screen">
+
+    <div style="text-align:center;margin-bottom:8px;">
+      <div class="success-icon">✓</div>
+      <div class="success-nombre" id="exitoNombre">—</div>
+      <div style="font-size:13px;color:var(--muted);">Registrado correctamente</div>
+    </div>
+
+    <div class="success-hora" id="exitoHora">00:00:00</div>
+
+    <div class="success-badges">
+      <div class="badge badge-grupo" id="exitoGrupo">—</div>
+      <div class="badge" id="exitoPuntual">—</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- RESUMEN DEL DÍA -->
+    <div class="section-title">📊 Hoy</div>
+    <div id="rankingHoy"><div style="text-align:center;color:var(--muted);padding:20px;">Cargando...</div></div>
+
+    <!-- HISTORIAL DÍAS -->
+    <div class="section-title">📅 Esta semana</div>
+    <div id="historialSemana"><div style="text-align:center;color:var(--muted);padding:20px;">Cargando...</div></div>
+
+  </div>
+
+  <!-- ===== SCREEN: ERROR ===== -->
+  <div id="screen-error" class="screen">
+    <div class="card" style="text-align:center;padding:36px 24px;">
+      <div class="error-icon">✕</div>
+      <div class="error-msg" id="errorMsg">Error al registrar</div>
+      <div class="error-detail" id="errorDetail">Intenta nuevamente</div>
+      <button class="btn-retry" onclick="volverFormulario()">← Volver al formulario</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// ⚠️ PEGA AQUÍ LA URL DE TU APPS SCRIPT WEB APP
+// ============================================================
+const SCRIPT_URL = "PEGA_AQUI_LA_URL_DE_TU_APPS_SCRIPT_WEB_APP";
+
+const GRUPOS = ["KALEB","BERIT","GEDEONES","SOY CALEB","JÉSED","EMUNÁ","ADONAI","DANIEL"];
+
+// Obtener código del QR desde la URL
+const params = new URLSearchParams(window.location.search);
+const codigoQR = params.get("c") || "";
+
+let userLat = null;
+let userLng = null;
+
+// ============================================================
+// GEOLOCALIZACIÓN
+// ============================================================
+function iniciarGeolocalizacion() {
+  if (!navigator.geolocation) {
+    setLocEstado("error", "Geolocalización no disponible");
+    return;
+  }
+
+  setLocEstado("pending", "Obteniendo ubicación...");
+
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      userLat = pos.coords.latitude;
+      userLng = pos.coords.longitude;
+      setLocEstado("ok", `Ubicación obtenida (±${Math.round(pos.coords.accuracy)}m)`);
+    },
+    err => {
+      setLocEstado("error", "No se pudo obtener ubicación — " + err.message);
+    },
+    { enableHighAccuracy: true, timeout: 15000 }
+  );
+}
+
+function setLocEstado(tipo, msg) {
+  const dot = document.getElementById("locDot");
+  const txt = document.getElementById("locText");
+  dot.className = "loc-dot " + (tipo === "ok" ? "ok" : tipo === "error" ? "error" : "");
+  txt.textContent = msg;
+  txt.style.color = tipo === "ok" ? "var(--verde)" : tipo === "error" ? "var(--rojo)" : "var(--muted)";
+}
+
+// ============================================================
+// ENVIAR REGISTRO
+// ============================================================
+async function enviarRegistro() {
+  const nombre = document.getElementById("inputNombre").value.trim();
+  const grupo = document.getElementById("selectGrupo").value;
+  const telefono = document.getElementById("inputTelefono").value.trim();
+
+  if (!nombre) { alert("Ingresa tu nombre completo"); return; }
+  if (!grupo) { alert("Selecciona tu grupo"); return; }
+  if (!telefono) { alert("Ingresa tu número de teléfono"); return; }
+  if (!codigoQR) { mostrarError("Código QR inválido", "Escanea el QR del salón nuevamente"); return; }
+  if (!userLat) { mostrarError("Sin ubicación", "Activa el GPS y recarga la página"); return; }
+
+  const btn = document.getElementById("btnEnviar");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loader"></span>';
+
+  try {
+    const res = await api({
+      accion: "registrar",
+      codigo: codigoQR,
+      nombre: nombre,
+      grupo: grupo,
+      telefono: telefono,
+      lat: userLat,
+      lng: userLng
+    });
+
+    if (!res.ok) throw new Error(res.error);
+    mostrarExito(res);
+  } catch (e) {
+    mostrarError("No se pudo registrar", e.message);
+    btn.disabled = false;
+    btn.textContent = "Registrar Asistencia";
+  }
+}
+
+// ============================================================
+// PANTALLA ÉXITO
+// ============================================================
+async function mostrarExito(data) {
+  mostrarScreen("screen-exito");
+
+  document.getElementById("exitoNombre").textContent = data.nombre.toUpperCase();
+  document.getElementById("exitoHora").textContent = data.hora;
+  document.getElementById("exitoGrupo").textContent = "✦ " + data.grupo;
+
+  const puntualEl = document.getElementById("exitoPuntual");
+  if (data.puntual) {
+    puntualEl.textContent = "✅ PUNTUAL";
+    puntualEl.className = "badge badge-puntual";
+  } else {
+    puntualEl.textContent = "⏰ TARDE";
+    puntualEl.className = "badge badge-tarde";
+  }
+
+  // Cargar ranking del día
+  cargarRankingHoy();
+  cargarHistorialSemana();
+}
+
+async function cargarRankingHoy() {
+  try {
+    const hoy = new Date().toISOString().slice(0, 10);
+    const res = await api({ accion: "obtenerResumenDia", fecha: hoy });
+    if (!res.ok) throw new Error();
+
+    const sorted = GRUPOS
+      .map(g => ({ nombre: g, ...(res.resumen[g] || { total: 0, puntuales: 0 }) }))
+      .filter(g => g.total > 0)
+      .sort((a, b) => {
+        const pA = a.total > 0 ? a.puntuales / a.total : 0;
+        const pB = b.total > 0 ? b.puntuales / b.total : 0;
+        return pB - pA;
+      });
+
+    if (sorted.length === 0) {
+      document.getElementById("rankingHoy").innerHTML = '<div style="text-align:center;color:var(--muted);font-size:13px;padding:16px;">Sin datos aún</div>';
+      return;
+    }
+
+    const colores = ["gold", "silver", "bronze"];
+    const html = sorted.map((g, i) => {
+      const pct = g.total > 0 ? Math.round(g.puntuales / g.total * 100) : 0;
+      return `<div class="rank-row ${i === 0 ? 'winner' : ''}" style="animation-delay:${i*0.05}s">
+        <div class="rank-pos ${colores[i] || ''}">${i === 0 ? '👑' : i + 1}</div>
+        <div class="rank-info">
+          <div class="rank-nombre">${g.nombre}</div>
+          <div class="rank-detalle">${g.puntuales} puntuales de ${g.total}</div>
+        </div>
+        <div class="rank-pct">${pct}%</div>
+      </div>`;
+    }).join("");
+
+    document.getElementById("rankingHoy").innerHTML = html;
+  } catch(e) {
+    document.getElementById("rankingHoy").innerHTML = '<div style="color:var(--muted);text-align:center;font-size:13px;">No disponible</div>';
+  }
+}
+
+async function cargarHistorialSemana() {
+  try {
+    const res = await api({ accion: "obtenerRankingAcumulado" });
+    if (!res.ok || !res.fechas || res.fechas.length === 0) {
+      document.getElementById("historialSemana").innerHTML = '<div style="text-align:center;color:var(--muted);font-size:13px;padding:16px;">Sin historial aún</div>';
+      return;
+    }
+
+    // Calcular victorias totales
+    const victorias = {};
+    GRUPOS.forEach(g => { victorias[g] = res.ranking[g]?.victorias || 0; });
+    const sorted = [...GRUPOS].sort((a, b) => victorias[b] - victorias[a]);
+
+    // Tabla de días
+    const fechas = res.fechas.slice(-7); // últimos 7 días
+    const diasCortos = fechas.map(f => {
+      const d = new Date(f + "T12:00:00");
+      return ["Do","Lu","Ma","Mi","Ju","Vi","Sa"][d.getDay()];
+    });
+
+    let html = `<div style="overflow-x:auto;">
+      <div style="min-width:340px;">
+        <div style="display:grid;grid-template-columns:90px repeat(${fechas.length},1fr);gap:4px;padding:6px 8px;font-size:10px;color:var(--muted);text-transform:uppercase;">
+          <div>Grupo</div>
+          ${diasCortos.map(d => `<div style="text-align:center">${d}</div>`).join("")}
+        </div>`;
+
+    sorted.forEach((g, idx) => {
+      const ranking = res.ranking[g];
+      const cells = fechas.map(fecha => {
+        const dia = ranking?.dias?.[fecha];
+        if (!dia) return `<div style="text-align:center;color:var(--border);font-size:11px;">—</div>`;
+        const cls = dia.ganador ? "cell-win" : "cell-ok";
+        return `<div class="hist-cell ${cls}">${dia.pct}%</div>`;
+      }).join("");
+
+      html += `<div style="display:grid;grid-template-columns:90px repeat(${fechas.length},1fr);gap:4px;padding:8px;border-radius:8px;margin-bottom:4px;background:var(--bg2);border:1px solid var(--border);">
+        <div style="font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px;">
+          ${idx===0?'👑':''}${g}
+        </div>
+        ${cells}
+      </div>`;
+    });
+
+    html += "</div></div>";
+
+    // Leyenda
+    html += `<div style="display:flex;gap:12px;margin-top:12px;font-size:11px;color:var(--muted);">
+      <span><span style="color:var(--amarillo);">■</span> Ganador del día</span>
+      <span><span style="color:var(--verde);">■</span> Con datos</span>
+      <span>— Sin reunión</span>
+    </div>`;
+
+    document.getElementById("historialSemana").innerHTML = html;
+  } catch(e) {
+    document.getElementById("historialSemana").innerHTML = '<div style="color:var(--muted);text-align:center;font-size:13px;">No disponible</div>';
+  }
+}
+
+// ============================================================
+// PANTALLA ERROR
+// ============================================================
+function mostrarError(titulo, detalle) {
+  mostrarScreen("screen-error");
+  document.getElementById("errorMsg").textContent = titulo;
+  document.getElementById("errorDetail").textContent = detalle;
+}
+
+function volverFormulario() {
+  mostrarScreen("screen-form");
+}
+
+// ============================================================
+// UTILIDADES
+// ============================================================
+function mostrarScreen(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo(0, 0);
+}
+
+async function api(data) {
+  const res = await fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+  return res.json();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+iniciarGeolocalizacion();
+
+// Si no hay código QR, mostrar aviso
+if (!codigoQR) {
+  document.getElementById("locText").textContent = "⚠ Escanea el QR del salón para registrarte";
+  document.getElementById("locDot").className = "loc-dot error";
+}
+</script>
+</body>
+</html>
